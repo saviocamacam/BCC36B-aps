@@ -1,0 +1,61 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+file_extensions:
+  - tpp
+scope: source.tpp
+contexts:
+  main:
+    # Strings begin and end with quotes, and use backslashes as an escape
+    # character
+    - match: '"'
+      scope: punctuation.definition.string.begin.tpp
+      push: double_quoted_string
+
+    # Comments begin with a '//' and finish at the end of the line
+    - match: '//'
+      scope: punctuation.definition.comment.tpp
+      push: line_comment
+
+    - match: '\{'
+      scope: punctuation.definition.comment.begin
+      push: block_comment
+
+    # Keywords are if, else for and while.
+    # Note that blackslashes don't need to be escaped within single quoted
+    # strings in YAML. When using single quoted strings, only single quotes
+    # need to be escaped: this is done by using two single quotes next to each
+    # other.
+    - match: '\b(se|senão|então|inteiro|fim|até|repita|retorna)\b'
+      scope: keyword.control.tpp
+
+    # Numbers
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.tpp
+
+    # Identifiers
+    - match: '[A-Za-z_][A-Za-z_0-9]*\(.*\)'
+      scope: variable.function
+
+    # Identifiers
+    - match: '[A-Za-z_][A-Za-z_0-9]*'
+      scope: variable.parameter
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double.tpp
+    - match: '\\.'
+      scope: constant.character.escape.tpp
+    - match: '"'
+      scope: punctuation.definition.string.end.tpp
+      pop: true
+
+  line_comment:
+    - meta_scope: comment.line.tpp
+    - match: $
+      pop: true
+
+  block_comment:
+    - meta_scope: comment.block
+    - match: '[^}]*'
+    - match: '\}'
+      pop: true
