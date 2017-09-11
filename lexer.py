@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 #-------------------------------------------------------------------------
 # lexer.py
 # Analisador léxico para a linguagem Tinnny++
@@ -51,18 +52,19 @@ class Lexer:
     t_AND = r'&&'
     t_OR = r'\|\|'
 
+    def t_FLUTUANTE(self, t):
+        r'\-?[0-9][0-9]*\.[0-9]+([Ee][-]?[0-9]+)?'
+        t.type = self.keywords.get(t.value,'FLUTUANTE')
+        return t
+
+    def t_INTEIRO(self, t):
+        r'-?[0-9][0-9]*'
+        t.type = self.keywords.get(t.value, 'INTEIRO')
+        return t
 
     def t_ID(self, t):
         r'[a-zA-Zá-ñÁ-Ñ][a-zA-Zá-ñÁ-Ñ0-9_]*'
         t.type = self.keywords.get(t.value,'ID')
-        return t
-
-    def t_INTEIRO(self, t):
-        r'[1-9][0-9]*'
-
-    def t_FLUTUANTE(self, t):
-        r'\-?[0-9][0-9]*\.?[0-9]+'
-        t.type = self.keywords.get(t.value,'FLUTUANTE')
         return t
 
     def t_COMMENT(self, t):
@@ -90,7 +92,7 @@ class Lexer:
             t = lex.token()
             if not t:
                 break
-            print(t)
+            print(t , '<' + t.type +',' + t.value + '>')
 
 if __name__ == '__main__':
     from sys import argv

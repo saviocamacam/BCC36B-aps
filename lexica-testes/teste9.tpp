@@ -1,6 +1,6 @@
-{1. (Valor: 2.0 ). Dizemos que uma matriz quadrada inteira é um quadrado mágico se a soma dos elementos de cada linha, a soma dos elementos de cada coluna e a soma dos elementos das diagonais principal e secundária são todas iguais. Dada uma matriz quadrada A(nxn), verificar se A é um quadrado mágico.}
+{1. (Valor: 2.0 ). Dizemos que uma matriz quadrada inteira ? um quadrado m?gico se a soma dos elementos de cada linha, a soma dos elementos de cada coluna e a soma dos elementos das diagonais principal e secund?ria s?o todas iguais. Dada uma matriz quadrada A(nxn), verificar se A ? um quadrado m?gico.}
 
-1.56966.58
+1
 inteiro principal()
 	inteiro: A[tamanho_matriz][tamanho_matriz]
 	inteiro: linha[tamanho_matriz]
@@ -13,6 +13,7 @@ inteiro principal()
 	inteiro: valor
 	inteiro: somador
 	inteiro: somador_temporario
+	flutuante: var_teste
 
 	i := 0
 	j := 0
@@ -30,7 +31,7 @@ inteiro principal()
 			linha[i] = linha[i] + A[i][j]
 			coluna[j] = coluna[j] + A[i][J]
 
-			se i = j entao
+			se i = j então
 				diagonal_principal = diagonal_principal + A[i][j]
 			fim
 
@@ -38,14 +39,14 @@ inteiro principal()
 				diagonal_secundaria = diagonal_secundaria + A[i][j]
 			fim
 
-		ate j < tamanho_matriz || x = 3
-	ate i < tamanho_matriz
+		até j < tamanho_matriz || x = 3
+	até i < tamanho_matriz
 
 	repita
-		se coluna[i] = linha[i] entao
+		se coluna[i] = linha[i] então
 
 		fim
-	ate i < tamanho_matriz
+	até i < tamanho_matriz
 
 	retorna(0)
 fim
