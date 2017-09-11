@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/savio/.m2/repository/de/jflex/jflex/1.6.1/jflex-1.6.1.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="de.jflex"/>
+			<attribute name="maven.artifactId" value="jflex"/>
+			<attribute name="maven.version" value="1.6.1"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/savio/Desktop/minijava/java-cup-11b.jar"/>
+	<classpathentry kind="lib" path="C:/Users/savio/Desktop/minijava/java-cup-11b-runtime.jar"/>
+	<classpathentry kind="lib" path="C:/Users/savio/Desktop/minijava/jflex-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/savio/Desktop/minijava/java-cup-11a.jar"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

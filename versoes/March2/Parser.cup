@@ -1,0 +1,216 @@
+/* Minijava Grammar */
+import java_cup.runtime.*;
+import java_cup.runtime.ComplexSymbolFactory;
+import java_cup.runtime.ScannerBuffer;
+import java_cup.runtime.XMLElement;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamWriter;
+import java.io.*;
+
+import javax.xml.transform.*;
+import javax.xml.transform.stream.*;
+
+parser code {: 
+	public Parser(Lexer lex, ComplexSymbolFactory sf) {
+		super(lex,sf);
+ 	}
+	
+	public void report_error(String message, Object info)  {
+	    System.out.println("Warning - " + message);
+	}
+	
+	public void report_fatal_error(String message, Object info)  {
+	    System.out.println("Error - " + message);
+	    System.exit(-1);
+	}
+  public static void main(String[] args) throws Exception {
+      // initialize the symbol factory
+      ComplexSymbolFactory csf = new ComplexSymbolFactory();
+      // create a buffering scanner wrapper
+      ScannerBuffer lexer = new ScannerBuffer(new Lexer(new BufferedReader(new FileReader(args[0])),csf));
+      // start parsing
+      Parser p = new Parser(lexer,csf);
+      XMLElement e = (XMLElement)p.parse().value;
+
+      for (XMLElement el: SyntaxTreeXPath.query(args[2],e)){
+      	  System.out.println(el.getTagname());
+      }
+
+
+      TestVisitor t = new TestVisitor();
+      SyntaxTreeDFS.dfs(e,t);
+
+      // create XML output file 
+      XMLOutputFactory outFactory = XMLOutputFactory.newInstance();
+      XMLStreamWriter sw = outFactory.createXMLStreamWriter(new FileOutputStream(args[1]));
+      // dump XML output to the file
+      XMLElement.dump(lexer,sw,e,"expressao","acao");
+      
+       // transform the parse tree into an AST and a rendered HTML version
+      Transformer transformer = TransformerFactory.newInstance()
+	    .newTransformer(new StreamSource(new File("tree.xsl")));
+      Source text = new StreamSource(new File(args[1]));
+      transformer.transform(text, new StreamResult(new File("output.xml")));
+      transformer = TransformerFactory.newInstance()
+	    .newTransformer(new StreamSource(new File("tree-view.xsl")));
+      text = new StreamSource(new File("output.xml"));
+      transformer.transform(text, new StreamResult(new File("ast.html")));
+  }
+:}; 
+
+terminal			SE, ENTAO, SENAO, FIM, REPITA, FLUTUANTE, RETORNA, ATE;
+terminal			LEIA, ESCREVA, ATRIBUICAO, DOISPONTOS, MAIORQ, MENORQ;
+terminal 			EPARENTESES, DPARENTESES, MULTIPLICACAO, IGUAL, SUBTRACAO;
+terminal 			ADICAO, DIVISAO, MENORIGUALQ, MAIORIGUALQ, INTEIRO;
+terminal 			ECOLCHETES, DCOLCHETES, ID, VIRGULA, DIFERENTE;
+terminal Integer	INTCONST;
+terminal Float 		FLOCONST, SCICONST;
+
+non terminal		programa, lista_declaracoes, declaracao, declaracao_variaveis;
+non terminal		atribuicao, declaracao_funcao, tipo, lista_variaveis, var, dimensao;
+non terminal		expressao_aditiva, assinatura, lista_parametros, corpo, parametro;
+non terminal		acao, expressao, se, repita, leia, escreva, retorna, erro;
+non terminal		expressao_simples, operador_relacional, expressao_multiplicativa;
+non terminal 		operador_soma, expressao_unaria, operador_multiplicacao, fator;
+non terminal		numero, chamada_funcao, lista_argumentos;
+
+precedence left SENAO, ADICAO, SUBTRACAO;
+precedence left MULTIPLICACAO, DIVISAO;
+precedence left EPARENTESES, DPARENTESES;
+
+programa ::= lista_declaracoes 							{: System.out.println("regra programa"); :}
+;
+
+lista_declaracoes ::= lista_declaracoes declaracao
+	| declaracao
+;
+
+declaracao ::= declaracao_variaveis
+	| atribuicao
+	| declaracao_funcao
+;
+
+declaracao_variaveis ::= tipo DOISPONTOS lista_variaveis				{: System.out.println("regra declaracao"); :}
+;
+
+lista_variaveis ::= lista_variaveis VIRGULA var
+	| lista_variaveis VIRGULA atribuicao
+	| atribuicao
+	| var
+;
+
+var ::= ID
+	| ID dimensao														{: System.out.println("regra identificador dimensao"); :}
+;
+
+dimensao ::= dimensao ECOLCHETES expressao_aditiva DCOLCHETES			{: :}
+	| ECOLCHETES expressao_aditiva DCOLCHETES							{: :}
+;
+
+tipo ::= INTEIRO														{: :}
+	| FLUTUANTE															{: :}
+;
+
+declaracao_funcao ::= tipo assinatura 									{: :}
+	| assinatura														{: :}
+;
+
+assinatura ::= ID EPARENTESES lista_parametros DPARENTESES corpo FIM 	{: :}
+;
+
+lista_parametros ::= lista_parametros VIRGULA parametro					{: :}
+	| parametro															{: :}
+	|																	{: :}
+;
+
+parametro ::= tipo DOISPONTOS ID 										{: :}
+	| parametro ECOLCHETES	DCOLCHETES									{: :}
+;
+
+corpo ::= corpo acao													{: :}
+	| 																	{: :}
+;
+
+acao ::= expressao
+	| declaracao_variaveis
+	| se
+	| repita
+	| leia
+	| escreva
+	| retorna															
+	| error:e                                               {: parser.report_error("Syntax error, skip rest",e); :}
+;
+
+se ::= SE expressao_simples operador_relacional expressao_aditiva ENTAO corpo FIM {: :}
+	| SE expressao_simples operador_relacional expressao_aditiva ENTAO corpo SENAO corpo FIM {: :}
+;
+
+repita ::= REPITA corpo ATE expressao_simples operador_relacional expressao_aditiva {: :}
+;
+
+atribuicao ::= var ATRIBUICAO expressao									{: System.out.println("Regra de atribuicao"); :}
+;
+
+leia ::= LEIA EPARENTESES ID DPARENTESES								{: :}
+;
+
+escreva ::= ESCREVA EPARENTESES expressao DPARENTESES					{: :}
+;
+
+retorna ::= RETORNA EPARENTESES expressao DPARENTESES					{: :}
+;
+
+expressao ::= expressao_simples											{: :}
+	| atribuicao														{: :}
+;
+
+expressao_simples ::= expressao_simples operador_relacional expressao_aditiva {: :}
+	| expressao_aditiva													{: :}
+;
+
+expressao_aditiva ::= expressao_aditiva operador_soma expressao_multiplicativa {: :}
+	| expressao_multiplicativa											{: :}
+;
+
+expressao_multiplicativa ::= expressao_multiplicativa operador_multiplicacao expressao_unaria {: :}
+	| expressao_unaria													{: :}
+;
+
+expressao_unaria ::= operador_soma fator								{: :}
+	| fator																{: :}
+;
+
+operador_relacional ::= MENORQ 
+	| MAIORQ															{: :}
+	| IGUAL																{: :}
+	| DIFERENTE															{: :}
+	| MENORIGUALQ														{: :}
+	| MAIORIGUALQ 														{: :}
+;
+
+operador_soma ::= ADICAO 												{: :}
+	| SUBTRACAO															{: :}
+;
+
+operador_multiplicacao ::= MULTIPLICACAO 								{: :}
+	| DIVISAO															{: :}
+;
+
+fator ::= EPARENTESES expressao DPARENTESES								{: :}
+	| var																{: :}
+	| chamada_funcao													{: :}
+	| numero															{: :}
+;
+
+numero ::= INTCONST 												{: :}
+	| FLOCONST 													{: :}
+	| SCICONST												{: :}
+;
+
+chamada_funcao ::= ID EPARENTESES lista_argumentos DPARENTESES			{: :}
+;
+
+lista_argumentos ::= lista_argumentos VIRGULA expressao					{: :}
+	| expressao															{: :}
+	| 		 															{: :}
+;

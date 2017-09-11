@@ -1,0 +1,10 @@
+i = 0;
+n = 10;
+while(i < n) {
+  print(i);
+  i = i + 1;
+  t = i * 2;
+  print(i);
+  print(i);
+
+}

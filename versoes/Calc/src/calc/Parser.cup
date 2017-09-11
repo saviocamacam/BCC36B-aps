@@ -1,0 +1,35 @@
+import java_cup.runtime.*;
+
+parser code {:
+
+    public void report_error(String message, Object info)  {
+        System.out.println("Warning - " + message);
+    }
+
+    public void report_fatal_error(String message, Object info)  {
+        System.out.println("Error - " + message);
+        System.exit(-1);
+    }
+
+:}
+
+terminal            SEMI, PLUS, MINUS, TIMES, DIVIDED, LPAREN, RPAREN;
+terminal Integer    NUMBER;        
+
+non terminal            expr_list;
+non terminal Integer    expr;
+
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDED;
+
+expr_list ::= expr_list expr:e SEMI         {: System.out.println(">> " + e); :}
+            | expr:e SEMI                   {: System.out.println(">> " + e); :}
+;
+expr      ::= expr:e1 PLUS  expr:e2         {: RESULT = e1+e2;       :}
+            | expr:e1 MINUS expr:e2         {: RESULT = e1-e2;       :}
+            | expr:e1 TIMES expr:e2         {: RESULT = e1*e2;       :}
+            | expr:e1 DIVIDED expr:e2       {: RESULT = e1/e2;       :}
+
+            | LPAREN expr:e RPAREN          {: RESULT = e;           :}
+            | NUMBER:n                      {: RESULT = n;           :}
+;
