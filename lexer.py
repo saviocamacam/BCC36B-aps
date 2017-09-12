@@ -58,7 +58,7 @@ class Lexer:
         return t
 
     def t_INTEIRO(self, t):
-        r'-?[0-9][0-9]*'
+        r'\-?[0-9][0-9]*'
         t.type = self.keywords.get(t.value, 'INTEIRO')
         return t
 

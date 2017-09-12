@@ -1,6 +1,10 @@
 {1. (Valor: 2.0 ). Dizemos que uma matriz quadrada inteira ? um quadrado m?gico se a soma dos elementos de cada linha, a soma dos elementos de cada coluna e a soma dos elementos das diagonais principal e secund?ria s?o todas iguais. Dada uma matriz quadrada A(nxn), verificar se A ? um quadrado m?gico.}
 
-1
+{
+(se)|(então)|(senão)|(fim)|(repita)|(flutuante)|(retorna)|(até)|(leia)|(escreva)|(inteiro)|(:=)|(:)|(>)|(<)|(\*)|(=)|(\-)|(\+)|(/)|(<=)|(>=)|(\[)|(\])|(')|(")|([a-zA-Zá-ñÁ-Ñ][a-zA-Zá-ñÁ-Ñ0-9_]*)|(\-?[0-9][0-9]*)|(\-?[0-9][0-9]*\.[0-9]+([Ee][-]?[0-9]+)?)|(\{[^}]*\})|(\n+)|( \t)|([{}])
+}
+
+
 inteiro principal()
 	inteiro: A[tamanho_matriz][tamanho_matriz]
 	inteiro: linha[tamanho_matriz]
