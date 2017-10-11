@@ -53,7 +53,7 @@ class Lexer:
     t_OR = r'\|\|'
 
     def t_FLUTUANTE(self, t):
-        r'\-?[0-9][0-9]*\.[0-9]+([Ee][-]?[0-9]+)?'
+        r'\-?[0-9][0-9]*\.[0-9]*([Ee][-]?[0-9]+)?'
         t.type = self.keywords.get(t.value,'FLUTUANTE')
         return t
 
@@ -92,10 +92,13 @@ class Lexer:
             t = lex.token()
             if not t:
                 break
-            print(t , '<' + t.type +',' + t.value + '>')
+            print( '<' + t.type +',' + t.value + '>')
 
 if __name__ == '__main__':
     from sys import argv
     lexer  = Lexer()
-    f = open(argv[1])
-    lexer.test(f.read())
+    for filename in argv[1:]:
+        f = open(filename, encoding='utf-8')
+        print(f.name)
+        lexer.test(f.read())
+        print("\n")
