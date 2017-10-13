@@ -166,7 +166,6 @@ class Parser:
             | parametro
             | empty
         '''
-
         if len(p) == 4:
             p[0] = Tree('lista_parametros', [p[1], p[3]], p[2])
         elif len(p) == 2:
@@ -202,12 +201,14 @@ class Parser:
         p[0] = Tree('parametro', [p[1], p[2], p[3]])
 
     def p_operador_relacional(self, p):
-        '''operador_relacional : LET
+        '''
+        operador_relacional : LET
             | GRT
             | EQU
             | NEQ
             | LEQ
-            | GEQ'''
+            | GEQ
+        '''
         p[0] = Tree('operador_relacional', p[1])
 
     def p_expressao_aditiva(self, p):
@@ -232,13 +233,17 @@ class Parser:
             p[0] = Tree('expressao_multiplicativa', [p[1], p[2], p[3]])
 
     def p_operador_soma(self, p):
-        '''operador_soma : ADD
-            | SUB'''
+        '''
+        operador_soma : ADD
+            | SUB
+        '''
         p[0] = Tree('operador_soma', [], p[1])
 
     def p_operador_multiplicacao(self, p):
-        '''operador_multiplicacao : TIMES
-            | DIV'''
+        '''
+        operador_multiplicacao : TIMES
+            | DIV
+        '''
         p[0] = Tree('operador_multiplicacao', p[1])
 
     def p_expressao_unaria(self, p):
@@ -264,8 +269,10 @@ class Parser:
             p[0] = Tree('fator', p[2])
 
     def p_numero(self, p):
-        '''numero : INTEIRO
-            | FLUTUANTE'''
+        '''
+        numero : INTEIRO
+            | FLUTUANTE
+        '''
         p[0] = Tree('numero', [], p[1])
 
     def p_chamada_funcao(self, p):
@@ -282,7 +289,7 @@ class Parser:
         elif len(p) == 4:
             p[0] = Tree('lista_argumentos', [p[1], p[3]])
 
-    def p_empty(p):
+    def p_empty(self, p):
         'empty :'
         pass
 

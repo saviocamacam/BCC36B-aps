@@ -2,6 +2,7 @@ inteiro: n
 
 inteiro fatorial(inteiro: n)
     inteiro: fat
+    fat := 1.32E-110
     se n > 0 então {não calcula se n > 0}
         fat := 1
         repita
@@ -19,21 +20,3 @@ inteiro principal()
     escreva(fatorial(n))
     retorna(0)
 fim
-
-1.32e110
-
-1.32E-110
-
--1.32e110
-
-+1.32e110
-
-(1++2)
-+2
-
--3
-{}
-
-{
-    saf
-}
