@@ -37,19 +37,21 @@ class Parser:
 
     def p_programa(self, p):
         'programa : lista_declaracoes'
-        self.current_producion = p
         p[0] = Tree('program', [p[1]])
 
     def p_lista_declaracoes(self, p):
         '''
         lista_declaracoes : lista_declaracoes declaracao
             | declaracao
+            | error
         '''
-        self.current_producion = p
-        if len(p) == 3:
+        if p.slice[1].type == "error":
+            print("Erro de declaracao na linha " + str(p.slice[1].lineno))
+        elif len(p) == 3:
             p[0] = Tree('lista-declaracoes', [p[1],p[2]])
         elif len(p) == 2:
             p[0] = Tree('lista-declaracoes', [p[1]])
+
 
     def p_declaracao(self, p):
         '''
@@ -57,7 +59,6 @@ class Parser:
             | inicializacao_variaveis
             | declaracao_funcao
         '''
-        self.current_producion = p
         p[0] = Tree('declaracao', [p[1]])
 
     def p_declaracao_variaveis(self, p):
@@ -65,9 +66,12 @@ class Parser:
         self.current_producion = p
         p[0] = Tree('declaracao', [p[1], p[3]])
 
+    def p_declaracao_variaveis_error(self, p):
+        'declaracao_variaveis : tipo COLON error'
+        print("Erro na declaração de variáveis na linha " +  str(p.slice[3].lineno))
+
     def p_inicializacao_variaveis(self, p):
         'inicializacao_variaveis : atribuicao'
-        self.current_producion = p
         p[0] = Tree('inicializacao-variaveis', [p[1]])
 
     def p_declaracao_funcao(self, p):
@@ -75,7 +79,6 @@ class Parser:
         declaracao_funcao : tipo cabecalho
             | cabecalho
         '''
-        self.current_producion = p
         if len(p) == 3:
             p[0] = Tree('declaracao-funcao', [p[1], p[2]])
         elif len(p) == 2:
@@ -101,11 +104,48 @@ class Parser:
         print("Erro na declaração de variaveis na linha " + str(p.slice[2].lineno))
 
     def p_atribuicao(self, p):
-        'atribuicao : var ASS expressao'
-        p[0] = Tree('atribuicao', [p[1], p[3]], p[2])
+        '''
+        atribuicao : var simbolo_atribuicao expressao
+            | condicional
+            | NOT condicional
+        '''
+        if len(p) == 4:
+            p[0] = Tree('atribuicao', [p[1], p[2], p[3]])
+        elif len(p) == 2:
+            p[0] = Tree('atribuicao', [p[1]])
+        elif len(p) == 3:
+            p[0] = Tree('atribuicao', [p[2]], p[1])
 
-    def p_atribuica_error(self, p):
-        'atribuicao : var ASS error'
+
+    def p_condicional(self, p):
+        '''
+        condicional : expressao_simples operador_relacional expressao_aditiva
+            | LPAR condicional RPAR
+            | condicional simbolo_condicional condicional
+            | condicional simbolo_condicional error
+            | LPAR error RPAR
+            | error simbolo_condicional condicional
+        '''
+        if p.slice[1].type == "expressao_simples":
+            p[0] = Tree('operador_relacional', [p[1], p[2], p[3]])
+        elif p.slice[2].type == "condicional":
+            p[0] = Tree('condicional', [p[2]])
+        elif p.slice[1].type == "condicional":
+            p[0] = Tree('simbolo_condicional', [p[1], p[2], p[3]])
+
+    def p_simbolo_condicional(self, p):
+        '''
+        simbolo_condicional : OR
+            | AND
+        '''
+        p[0] = Tree('simbolo-condicional', [], p[1])
+
+    def p_simbolo_atribuicao(self, p):
+        'simbolo_atribuicao : ASS'
+        p[0] = Tree('simbolo-atribuicao', [], p[1])
+
+    def p_atribuicao_error(self, p):
+        'atribuicao : var simbolo_atribuicao error'
         print("Erro de atribuição na linha " + str(p.slice[2].lineno))
 
     def p_cabecalho(self, p):
@@ -114,13 +154,13 @@ class Parser:
 
     def p_cabecalho_error(self, p):
         'cabecalho : ID LPAR lista_parametros RPAR corpo error'
-        print("Erro sintático. Função está faltando FIM na linha " + str(p.slice[5].lineno))
+        print("Erro sintático. Função está faltando FIM na linha " + str(p.slice[6].lineno))
+
     def p_corpo(self, p):
         '''
         corpo : corpo acao
             | empty
         '''
-        self.current_producion = p
         if len(p) == 3:
             p[0] = Tree('corpo', [p[1], p[2]])
         elif len(p) == 2:
@@ -136,7 +176,6 @@ class Parser:
             | escreve
             | retorna
         '''
-        self.current_producion = p
         p[0] = Tree('acao', [p[1]])
 
     def p_se(self, p):
@@ -167,7 +206,6 @@ class Parser:
 
     def p_repita_error(self, p):
         'repita : REPITA corpo error'
-        self.current_producion = p
         print("Erro. Esperado expressão de termino")
 
     def p_leia(self, p):
@@ -183,14 +221,13 @@ class Parser:
     def p_retorna(self, p):
         'retorna :  RETORNA LPAR expressao RPAR'
         self.current_producion = p
-        p[0] = Tree('retorna', [p[3]])
+        p[0] = Tree('retorna', [p[3]], p[1])
 
     def p_var(self, p):
         '''
         var : ID
             | ID indice
         '''
-        self.current_producion = p
         if len(p) == 2:
             p[0] = Tree('var', [], p[1])
         elif len(p) == 3:
@@ -210,9 +247,8 @@ class Parser:
             | parametro
             | empty
         '''
-        self.current_producion = p
         if len(p) == 4:
-            p[0] = Tree('lista-parametros', [p[1], p[3]])
+            p[0] = Tree('lista-parametros', [p[1], p[3]], p[2])
         elif len(p) == 2:
             p[0] = Tree('lista-parametros', [p[1]])
 
@@ -226,6 +262,15 @@ class Parser:
             p[0] = Tree('indice', [p[1], p[3]])
         elif len(p) == 4:
             p[0] = Tree('indice', [p[2]])
+
+    def p_indice_error(self, p):
+        '''
+        indice : indice LBR error RBR
+            | LBR error RBR
+            | error RBR
+            | LBR error
+        '''
+        print("Erro sintático no índice na linha " + str(p.slice[3].lineno))
 
     def p_expressao_simples(self, p):
         '''
@@ -243,11 +288,11 @@ class Parser:
         parametro : tipo COLON ID
             | parametro LBR RBR
         '''
-        self.current_producion = p
-        if str(p[1]) == 'tipo':
+        if p[1].type == "tipo":
             p[0] = Tree('parametro', [p[1]], p[3])
-        elif str(p[1]) == 'parametro':
+        elif p[1].type == "parametro":
             p[0] == Tree('parametro', [p[1]])
+
 
     def p_operador_relacional(self, p):
         '''
@@ -340,6 +385,7 @@ class Parser:
         '''
         lista_argumentos : lista_argumentos COM expressao
             | expressao
+            | empty
         '''
         self.current_producion = p
         if len(p) == 2:
@@ -351,6 +397,13 @@ class Parser:
         'empty :'
         pass
 
+    def p_error(self, p):
+        if p:
+            print("'%s', linha %d" % (p.value, p.lineno))
+        else:
+            yacc._restart
+            print('Erro sintático: definições incompletas!')
+            exit(1)
 
 
 def generateTree(t):
@@ -363,7 +416,21 @@ def generateTree(t):
         print(']')
 
 if __name__ == '__main__':
+
     from sys import argv, exit
     f = open(argv[1],  encoding='utf-8')
     p = Parser(f.read())
     generateTree(p.ast)
+    '''
+
+
+    import glob, os
+    path = "C:/Users/savio/git/compiladores-march/testes"
+    os.chdir(path)
+
+    for file in glob.glob("*.tpp"):
+        print(file.title())
+        f = open(file,  encoding='utf-8')
+        p = Parser(f.read())
+        generateTree(p.ast)
+    '''
