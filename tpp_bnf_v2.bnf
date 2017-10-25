@@ -1,0 +1,62 @@
+# Programa
+<programa>    ::= <declaracoes_definicoes>
+
+# Declaracoes
+<declaracoes_definicoes>	::= <declaracao_definicao> <declaracoes_definicoes> | <declaracao_definicao>
+<declaracao_definicao> 	  ::= <declaracao> | <definicao>
+<definicao>		::= <definicao_funcao>
+<declaracao>  ::= <declaracao_variavel>
+                | <declaracao_condicional>
+                | <declaracao_expressao>
+<declaracao_variavel>	::= <tipo> : <declaracao_id>
+<declaracao_id>				::= <id_variavel> , <declaracao_id> | <id_variavel>
+<id_variavel>					::= <id> | <id_variavel> [ <expressao> ]
+<definicao_funcao>		::= <tipo> <id> ( <parametros> ) <bloco> fim 
+                         | <id> ( <parametros> ) <bloco> fim
+<parametros>					::= <parametros> , <parametro> | <parametro> | VAZIO
+<parametro>						::= <tipo> : <id_parametro>
+<id_parametro>				::= <id> | <id_parametro> []
+<declaracao_condicional> ::= <declaracao_se_entao>
+                            | <declaracao_repita_ate>
+<declaracao_se_entao>		::= se <expressao> então <bloco> fim 
+                        | se <expressao> então <bloco> senão <bloco> fim
+<declaracao_repita_ate> ::= repita <bloco> até <expressao>
+<declaracao_expressao>	::= <expressao>
+
+# Bloco
+<bloco> ::= <bloco> <declaracao> | <declaracao>
+
+# Chamada de função
+<chamada_funcao> ::= <id> ( <parametros_chamada> ) 
+<parametros_chamada> ::= <id> | <chamada_funcao> | <parametros_chamada> , <id>
+
+# Tipos
+<tipo> ::= inteiro | flutuante
+
+# Identificadores
+<id> ::= letra | letra numero
+
+# Expressoes
+<expressao> ::= <expressao_atribuicao> | <expressao> <expressao_atribuicao>
+<expressao_atribuicao> 	::= <expressao_condicional_or> 
+                            | <expressao_unaria> := <expressao_atribuicao>
+<expressao_condicional_or> ::= <expressao_condicional_and>
+                            | <expressao_condicional_or> || <expressao_condicional_and>
+<expressao_condicional_and> ::= <expressao_igualdade>
+                            | <expressao_condicional_and> && <expressao_igualdade>
+<expressao_igualdade> 	::= <expressao_relacional>
+                        | <expressao_igualdade> = <expressao_relacional>
+                        | <expressao_igualdade> <> <expressao_relacional>
+<expressao_relacional> ::= <expressao_aditiva>
+                        |  <expressao_relacional> > <expressao_aditiva>
+                        |  <expressao_relacional> < <expressao_aditiva>
+                        |  <expressao_relacional> >= <expressao_aditiva>
+                        |  <expressao_relacional> <= <expressao_aditiva>
+<expressao_aditiva> ::= <expressao_multiplicativa>
+                        |  <expressao_aditiva> + <expressao_multiplicativa>
+                        |  <expressao_aditiva> - <expressao_multiplicativa>
+<expressao_multiplicativa> ::= <expressao_unaria>
+                        |  <expressao_multiplicativa> * <expressao_unaria>
+                        |  <expressao_multiplicativa> / <expressao_unaria>
+<expressao_unaria> 		::= <expressao_primaria>
+<expressao_primaria> 	::= <id_variavel> | <numero> | ( <expressao> ) | <chamada_funcao>
