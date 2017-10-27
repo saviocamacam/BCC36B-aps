@@ -58,8 +58,12 @@ class Parser:
         declaracao : declaracao_variaveis
             | inicializacao_variaveis
             | declaracao_funcao
+            | error
         '''
-        p[0] = Tree('declaracao', [p[1]])
+        if p.slice[1].type == "error":
+            print("Erro de declaracao na linha " + str(p.slice[1].lineno))
+        else:
+            p[0] = Tree('declaracao', [p[1]])
 
     def p_declaracao_variaveis(self, p):
         'declaracao_variaveis : tipo COLON lista_variaveis'
@@ -83,6 +87,13 @@ class Parser:
             p[0] = Tree('declaracao-funcao', [p[1], p[2]])
         elif len(p) == 2:
             p[0] = Tree('declaracao-funcao', [p[1]])
+
+    def p_declaracao_funcao_error(self, p):
+        '''
+        declaracao_funcao : tipo cabecalho error
+            | cabecalho error
+        '''
+        print("Erro de declaracao na linha " + str(p.slice[1].lineno))
 
     def p_tipo(self, p):
         '''tipo : INTEIRO 
@@ -286,12 +297,16 @@ class Parser:
     def p_parametro(self, p):
         '''
         parametro : tipo COLON ID
-            | parametro LBR RBR
+            | parametro dimension
         '''
-        if p[1].type == "tipo":
+        if p.slice[1].type == "tipo":
             p[0] = Tree('parametro', [p[1]], p[3])
-        elif p[1].type == "parametro":
-            p[0] == Tree('parametro', [p[1]])
+        elif p.slice[1].type == 'parametro':
+            p[0] = Tree('parametro', [p[1], p[2]])
+
+    def p_dimension(self, p):
+        'dimension : LBR RBR'
+        p[0] = Tree('dimension', [], 'dim')
 
 
     def p_operador_relacional(self, p):
@@ -416,21 +431,20 @@ def generateTree(t):
         print(']')
 
 if __name__ == '__main__':
-
     from sys import argv, exit
-    f = open(argv[1],  encoding='utf-8')
-    p = Parser(f.read())
-    generateTree(p.ast)
-    '''
-
-
-    import glob, os
-    path = "C:/Users/savio/git/compiladores-march/testes"
-    os.chdir(path)
-
-    for file in glob.glob("*.tpp"):
-        print(file.title())
-        f = open(file,  encoding='utf-8')
+    config = 1
+    if config:
+        f = open(argv[1],  encoding='utf-8')
         p = Parser(f.read())
         generateTree(p.ast)
-    '''
+
+    else:
+        import glob, os
+        path = "C:/Users/savio/git/compiladores-march/testes"
+        os.chdir(path)
+
+        for file in glob.glob("*.tpp"):
+            print(file.title())
+            f = open(file,  encoding='utf-8')
+            p = Parser(f.read())
+            generateTree(p.ast)
