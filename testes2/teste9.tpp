@@ -7,7 +7,7 @@
 -4
 -
 
-inteiro principal()
+inteiro principal(inteiro: tamanho_matriz)
 	inteiro: A[tamanho_matriz][tamanho_matriz]
 	inteiro: linha[tamanho_matriz]
 	inteiro: coluna[tamanho_matriz]
@@ -30,29 +30,41 @@ inteiro principal()
 	somador := 0
 
 	repita
-		repita
-			leia(valor)
-			A[i][j] = valor
-
-			linha[i] = linha[i] + A[i][j]
-			coluna[j] = coluna[j] + A[i][J]
-
-			se i = j então
-				diagonal_principal = diagonal_principal + A[i][j]
-			fim
-
-			se (i + j + 1) = tamanho_matriz entao
-				diagonal_secundaria = diagonal_secundaria + A[i][j]
-			fim
-
-		até j < tamanho_matriz || x = 3
+		linha[i] := 0
+		coluna[i] := 0
 	até i < tamanho_matriz
 
 	repita
-		se coluna[i] = linha[i] então
+		repita
+			leia(valor)
+			A[i][j] := valor
 
-		fim
+			linha[i] := linha[i] + A[i][j]
+			coluna[j] := coluna[j] + A[i][j]
+
+			se i = j então
+				diagonal_principal := diagonal_principal + A[i][j]
+			fim
+
+			se (i + j + 1) = tamanho_matriz entao
+				diagonal_secundaria := diagonal_secundaria + A[i][j]
+			fim
+
+		até j < tamanho_matriz
 	até i < tamanho_matriz
 
-	retorna(0)
+	inteiro : resultado
+	resultado := 1
+
+	se diagonal_principal = diagonal_secundaria então
+		i := 0
+		resultado := 0
+		repita
+			se coluna[i] != linha[i] && linha[i] != diagonal_principal então
+				resultado := 1
+			fim
+		até i < tamanho_matriz
+	fim
+
+	retorna(resultado)
 fim

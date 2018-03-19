@@ -9,6 +9,21 @@ from locale import str
 from ply import yacc
 from lexer import Lexer
 
+class Scope:
+
+    def __init__(self, name):
+        self.name = name
+        self.subscopes = []
+        self.entries = []
+
+    def get_entries(self):
+        return self.entries
+
+class Entry:
+    def __init__(self, name, valor):
+        self.name = name
+        self.valor = valor
+
 class Tree:
 
     def __init__(self, type_node, child=[], value=''):
@@ -23,7 +38,9 @@ class Parser:
 
     def __init__(self, code):
         lex = Lexer()
-        self.current_producion = ""
+        self.scopes = []
+        s = Scope('global')
+        self.scopes.append(s)
         self.tokens = lex.tokens
         self.precendence = (
             ('left', 'SENAO'),
@@ -67,8 +84,8 @@ class Parser:
 
     def p_declaracao_variaveis(self, p):
         'declaracao_variaveis : tipo COLON lista_variaveis'
-        self.current_producion = p
-        p[0] = Tree('declaracao', [p[1], p[3]])
+        
+        p[0] = Tree('declaracao-variaveis', [p[1], p[3]])
 
     def p_declaracao_variaveis_error(self, p):
         'declaracao_variaveis : tipo COLON error'
@@ -194,7 +211,7 @@ class Parser:
         se : SE expressao ENTAO corpo FIM
             | SE expressao ENTAO corpo SENAO corpo FIM
         '''
-        self.current_producion = p
+        
         if len(p) == 6:
             p[0] = Tree('se', [p[2], p[4]])
         elif len(p) == 8:
@@ -212,7 +229,7 @@ class Parser:
 
     def p_repita(self, p):
         'repita : REPITA corpo ATE expressao'
-        self.current_producion = p
+        
         p[0] = Tree('repita', [p[2], p[4]])
 
     def p_repita_error(self, p):
@@ -221,17 +238,17 @@ class Parser:
 
     def p_leia(self, p):
         'leia : LEIA LPAR ID RPAR'
-        self.current_producion = p
+        
         p[0] = Tree('leia', [], p[3])
 
     def p_escreve(self, p):
         'escreve : ESCREVE LPAR expressao RPAR'
-        self.current_producion = p
+        
         p[0] = Tree('escreve', [p[3]])
 
     def p_retorna(self, p):
         'retorna :  RETORNA LPAR expressao RPAR'
-        self.current_producion = p
+        
         p[0] = Tree('retorna', [p[3]], p[1])
 
     def p_var(self, p):
@@ -249,7 +266,7 @@ class Parser:
         expressao : expressao_simples
             | atribuicao
         '''
-        self.current_producion = p
+        
         p[0] = Tree('expressao', [p[1]])
 
     def p_lista_parametros(self, p):
@@ -268,7 +285,7 @@ class Parser:
         indice : indice LBR expressao RBR
             | LBR expressao RBR
         '''
-        self.current_producion = p
+        
         if len(p) == 5:
             p[0] = Tree('indice', [p[1], p[3]])
         elif len(p) == 4:
@@ -288,7 +305,7 @@ class Parser:
         expressao_simples : expressao_aditiva
             | expressao_simples operador_relacional expressao_aditiva
         '''
-        self.current_producion = p
+        
         if len(p) == 2:
             p[0] = Tree('expressao-simples', [p[1]])
         elif len(p) == 4:
@@ -318,7 +335,7 @@ class Parser:
             | LEQ
             | GEQ
         '''
-        self.current_producion = p
+        
         p[0] = Tree('operador-relacional', [], p[1])
 
     def p_expressao_aditiva(self, p):
@@ -326,7 +343,7 @@ class Parser:
         expressao_aditiva : expressao_multiplicativa
             | expressao_aditiva operador_soma expressao_multiplicativa
         '''
-        self.current_producion = p
+        
         if len(p) == 2:
             p[0] = Tree('expressao-aditiva', [p[1]])
         elif len(p) == 4:
@@ -337,7 +354,7 @@ class Parser:
         expressao_multiplicativa : expressao_unaria
             | expressao_multiplicativa operador_multiplicacao expressao_unaria
         '''
-        self.current_producion = p
+        
         if len(p) == 2:
             p[0] = Tree('expressao-multiplicativa', [p[1]])
         elif len(p) == 4:
@@ -348,7 +365,7 @@ class Parser:
         operador_soma : ADD
             | SUB
         '''
-        self.current_producion = p
+        
         p[0] = Tree('operador-soma', [], p[1])
 
     def p_operador_multiplicacao(self, p):
@@ -356,7 +373,7 @@ class Parser:
         operador_multiplicacao : TIMES
             | DIV
         '''
-        self.current_producion = p
+        
         p[0] = Tree('operador-multiplicacao', [], p[1])
 
     def p_expressao_unaria(self, p):
@@ -364,7 +381,7 @@ class Parser:
         expressao_unaria : fator
             | operador_soma fator
         '''
-        self.current_producion = p
+        
         if len(p) == 2:
             p[0] = Tree('expressao-unaria', [p[1]])
         elif len(p) == 3:
@@ -377,7 +394,7 @@ class Parser:
             | chamada_funcao
             | numero
         '''
-        self.current_producion = p
+        
         if len(p) == 2:
             p[0] = Tree('fator', [p[1]])
         elif len(p) == 4:
@@ -388,12 +405,12 @@ class Parser:
         numero : INTEIRO
             | FLUTUANTE
         '''
-        self.current_producion = p
+        
         p[0] = Tree('numero', [], p[1])
 
     def p_chamada_funcao(self, p):
         'chamada_funcao : ID LPAR lista_argumentos RPAR'
-        self.current_producion = p
+        
         p[0] = Tree('chamada-funcao', [p[3]], p[1])
 
     def p_lista_argumentos(self, p):
@@ -402,7 +419,7 @@ class Parser:
             | expressao
             | empty
         '''
-        self.current_producion = p
+        
         if len(p) == 2:
             p[0] = Tree('lista-argumentos', [p[1]])
         elif len(p) == 4:
