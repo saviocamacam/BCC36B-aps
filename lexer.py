@@ -70,6 +70,10 @@ class Lexer:
     def t_COMMENT(self, t):
         r'\{[^}]*\}'
 
+    '''
+    \{[^}]*[{]*\}
+    '''
+
     def t_newline(self, t):
         r'\n+'
         t.lexer.lineno += len(t.value)
@@ -92,7 +96,7 @@ class Lexer:
             t = lex.token()
             if not t:
                 break
-            print( '<' + t.type +',' + t.value + '>')
+            print('<' + t.type +',' + t.value + '>')
 
 if __name__ == '__main__':
     from sys import argv

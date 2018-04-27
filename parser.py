@@ -191,8 +191,8 @@ class Parser:
         '''
         if len(p) == 3:
             p[0] = Tree('corpo', [p[1], p[2]])
-        elif len(p) == 2:
-            p[0] = Tree('corpo', [p[1]])
+        '''elif len(p) == 2:
+            p[0] = Tree('corpo', [p[1]])'''
 
     def p_acao(self, p):
         '''
@@ -229,7 +229,6 @@ class Parser:
 
     def p_repita(self, p):
         'repita : REPITA corpo ATE expressao'
-        
         p[0] = Tree('repita', [p[2], p[4]])
 
     def p_repita_error(self, p):
@@ -237,24 +236,22 @@ class Parser:
         print("Erro. Esperado expressão de termino")
 
     def p_leia(self, p):
-        'leia : LEIA LPAR ID RPAR'
-        
-        p[0] = Tree('leia', [], p[3])
+        'leia : LEIA LPAR expressao RPAR'
+        p[0] = Tree('leia', [p[3]], p[1])
 
     def p_escreve(self, p):
         'escreve : ESCREVE LPAR expressao RPAR'
-        
-        p[0] = Tree('escreve', [p[3]])
+        p[0] = Tree('escreve', [p[3]], p[1])
 
     def p_retorna(self, p):
         'retorna :  RETORNA LPAR expressao RPAR'
-        
         p[0] = Tree('retorna', [p[3]], p[1])
 
     def p_var(self, p):
         '''
         var : ID
             | ID indice
+            | ID lista_dimensions
         '''
         if len(p) == 2:
             p[0] = Tree('var', [], p[1])
@@ -276,7 +273,7 @@ class Parser:
             | empty
         '''
         if len(p) == 4:
-            p[0] = Tree('lista-parametros', [p[1], p[3]], p[2])
+            p[0] = Tree('lista-parametros', [p[1], p[3]])
         elif len(p) == 2:
             p[0] = Tree('lista-parametros', [p[1]])
 
@@ -313,13 +310,23 @@ class Parser:
 
     def p_parametro(self, p):
         '''
-        parametro : tipo COLON ID
-            | parametro dimension
+        parametro : tipo COLON var
+            | parametro
         '''
         if p.slice[1].type == "tipo":
-            p[0] = Tree('parametro', [p[1]], p[3])
+            p[0] = Tree('parametro', [p[1], p[3]])
         elif p.slice[1].type == 'parametro':
-            p[0] = Tree('parametro', [p[1], p[2]])
+            p[0] = Tree('parametro', [p[1]])
+
+    def p_lista_dimensions(self, p):
+        '''
+        lista_dimensions : dimension
+            | lista_dimensions dimension
+        '''
+        if len(p) == 3:
+            p[0] = Tree('lista-dimensions', [p[1], p[2]])
+        elif len(p) == 2:
+            p[0] = Tree('lista-dimensions', [p[1]])
 
     def p_dimension(self, p):
         'dimension : LBR RBR'
