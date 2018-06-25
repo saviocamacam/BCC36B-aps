@@ -8,6 +8,9 @@ from locale import str
 
 from ply import yacc
 from lexer import Lexer
+from io import StringIO  # Python3
+
+import sys
 
 class Scope:
 
@@ -84,7 +87,6 @@ class Parser:
 
     def p_declaracao_variaveis(self, p):
         'declaracao_variaveis : tipo COLON lista_variaveis'
-        
         p[0] = Tree('declaracao-variaveis', [p[1], p[3]])
 
     def p_declaracao_variaveis_error(self, p):
@@ -101,6 +103,7 @@ class Parser:
             | cabecalho
         '''
         if len(p) == 3:
+
             p[0] = Tree('declaracao-funcao', [p[1], p[2]])
         elif len(p) == 2:
             p[0] = Tree('declaracao-funcao', [p[1]])
@@ -113,7 +116,7 @@ class Parser:
         print("Erro de declaracao na linha " + str(p.slice[1].lineno))
 
     def p_tipo(self, p):
-        '''tipo : INTEIRO 
+        '''tipo : INTEIRO
             | FLUTUANTE'''
         p[0] = Tree('tipo', [], p[1])
 
@@ -211,7 +214,7 @@ class Parser:
         se : SE expressao ENTAO corpo FIM
             | SE expressao ENTAO corpo SENAO corpo FIM
         '''
-        
+
         if len(p) == 6:
             p[0] = Tree('se', [p[2], p[4]])
         elif len(p) == 8:
@@ -221,11 +224,15 @@ class Parser:
         '''
         se : SE expressao error corpo FIM
             | error SENAO corpo FIM
+            | SE expressao SENAO corpo error
         '''
         if len(p) == 6:
             print("Erro sintático na linha " + str(p.slice[3].lineno) + ". Esperado um ENTÃO")
         elif len(p) == 5:
             print("Erro sintático na linha " + str(p.slice[1].lineno) + ". Condicional SENÃO mal-formado")
+        elif len(p) == 6 and p.slice[5].type == "error":
+            print("Erro sintático na linha " + str(p.slice[1].lineno) + ". SENÃO espera um FIM")
+
 
     def p_repita(self, p):
         'repita : REPITA corpo ATE expressao'
@@ -263,7 +270,7 @@ class Parser:
         expressao : expressao_simples
             | atribuicao
         '''
-        
+
         p[0] = Tree('expressao', [p[1]])
 
     def p_lista_parametros(self, p):
@@ -282,7 +289,7 @@ class Parser:
         indice : indice LBR expressao RBR
             | LBR expressao RBR
         '''
-        
+
         if len(p) == 5:
             p[0] = Tree('indice', [p[1], p[3]])
         elif len(p) == 4:
@@ -302,7 +309,7 @@ class Parser:
         expressao_simples : expressao_aditiva
             | expressao_simples operador_relacional expressao_aditiva
         '''
-        
+
         if len(p) == 2:
             p[0] = Tree('expressao-simples', [p[1]])
         elif len(p) == 4:
@@ -342,7 +349,7 @@ class Parser:
             | LEQ
             | GEQ
         '''
-        
+
         p[0] = Tree('operador-relacional', [], p[1])
 
     def p_expressao_aditiva(self, p):
@@ -350,7 +357,7 @@ class Parser:
         expressao_aditiva : expressao_multiplicativa
             | expressao_aditiva operador_soma expressao_multiplicativa
         '''
-        
+
         if len(p) == 2:
             p[0] = Tree('expressao-aditiva', [p[1]])
         elif len(p) == 4:
@@ -361,7 +368,7 @@ class Parser:
         expressao_multiplicativa : expressao_unaria
             | expressao_multiplicativa operador_multiplicacao expressao_unaria
         '''
-        
+
         if len(p) == 2:
             p[0] = Tree('expressao-multiplicativa', [p[1]])
         elif len(p) == 4:
@@ -372,7 +379,7 @@ class Parser:
         operador_soma : ADD
             | SUB
         '''
-        
+
         p[0] = Tree('operador-soma', [], p[1])
 
     def p_operador_multiplicacao(self, p):
@@ -380,7 +387,7 @@ class Parser:
         operador_multiplicacao : TIMES
             | DIV
         '''
-        
+
         p[0] = Tree('operador-multiplicacao', [], p[1])
 
     def p_expressao_unaria(self, p):
@@ -388,7 +395,7 @@ class Parser:
         expressao_unaria : fator
             | operador_soma fator
         '''
-        
+
         if len(p) == 2:
             p[0] = Tree('expressao-unaria', [p[1]])
         elif len(p) == 3:
@@ -401,7 +408,7 @@ class Parser:
             | chamada_funcao
             | numero
         '''
-        
+
         if len(p) == 2:
             p[0] = Tree('fator', [p[1]])
         elif len(p) == 4:
@@ -412,12 +419,12 @@ class Parser:
         numero : INTEIRO
             | FLUTUANTE
         '''
-        
+
         p[0] = Tree('numero', [], p[1])
 
     def p_chamada_funcao(self, p):
         'chamada_funcao : ID LPAR lista_argumentos RPAR'
-        
+
         p[0] = Tree('chamada-funcao', [p[3]], p[1])
 
     def p_lista_argumentos(self, p):
@@ -426,7 +433,7 @@ class Parser:
             | expressao
             | empty
         '''
-        
+
         if len(p) == 2:
             p[0] = Tree('lista-argumentos', [p[1]])
         elif len(p) == 4:
@@ -456,11 +463,38 @@ def generateTree(t):
 
 if __name__ == '__main__':
     from sys import argv, exit
+    from selenium import webdriver
+    from selenium.webdriver.common.keys import Keys
+    from time import sleep
+    import base64
+
     config = 1
     if config:
+        old_stdout = sys.stdout
+        result = StringIO()
+        sys.stdout = result
+
         f = open(argv[1],  encoding='utf-8')
         p = Parser(f.read())
         generateTree(p.ast)
+
+        sys.stdout = old_stdout
+        result_string = result.getvalue()
+        #result_string = result_string.replace('\n', '')
+        #result_string = result_string.replace('\t', '')
+        print(result_string)
+
+        ff = "C:/Users/savio/Downloads/geckodriver.exe"
+        driver = webdriver.Firefox(executable_path=ff)
+        driver.get("http://127.0.0.1:5500/")
+
+        inputElement = driver.find_element_by_id("i")
+        #inputElement.clear()
+        driver.execute_script(
+            "document.querySelector('#i').innerHTML = arguments[0]", result_string)
+        inputElement.send_keys(' ')
+
+
 
     else:
         import glob, os

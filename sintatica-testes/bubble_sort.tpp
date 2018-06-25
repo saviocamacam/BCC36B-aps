@@ -17,14 +17,14 @@ preencheVetor()
 fim
 
 { implementação do bubble sort }
-bubble_sort(inteiro: a[][])
+bubble_sort()
   inteiro: i
   i := 0
   repita
     inteiro: j
     j := 0
     repita
-      se (vet[i] > v[j] || vet[i] = 9) && v[j] <> 16 então
+      se vet[i] > v[j] então
         inteiro: temp
         temp := vet[i]
         vet[i] := vet[j]
@@ -38,7 +38,7 @@ fim
 
 { programa principal }
 inteiro principal()
-  preencheVetor(qualquer)
-  bubble_sort(coisa)
+  preencheVetor()
+  bubble_sort()
   retorna(0)
 fim

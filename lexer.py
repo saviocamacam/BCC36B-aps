@@ -19,12 +19,12 @@ class Lexer:
         u'senão': 'SENAO',
         u'fim': 'FIM',
         u'repita': 'REPITA',
+        u'inteiro': 'INTEIRO',
         u'flutuante': 'FLUTUANTE',
         u'retorna': 'RETORNA',
         u'até': 'ATE',
         u'leia': 'LEIA',
         u'escreve': 'ESCREVE',
-        u'inteiro': 'INTEIRO',
     }
 
     tokens = ['ASS', 'COLON', 'LPAR', 'RPAR', 'ADD', 'SUB', 'TIMES', 'DIV',
@@ -52,15 +52,17 @@ class Lexer:
     t_AND = r'&&'
     t_OR = r'\|\|'
 
+    def t_INTEIRO(self, t):
+        r'[0-9][0-9]*'
+        t.type = self.keywords.get(t.value, 'INTEIRO')
+        return t
+
     def t_FLUTUANTE(self, t):
-        r'\-?[0-9][0-9]*\.[0-9]*([Ee][-]?[0-9]+)?'
+        r'[0-9][0-9]*\.[0-9]*([Ee][-]?[0-9]+)?'
         t.type = self.keywords.get(t.value,'FLUTUANTE')
         return t
 
-    def t_INTEIRO(self, t):
-        r'\-?[0-9][0-9]*'
-        t.type = self.keywords.get(t.value, 'INTEIRO')
-        return t
+
 
     def t_ID(self, t):
         r'[a-zA-Zá-ñÁ-Ñ][a-zA-Zá-ñÁ-Ñ0-9_]*'

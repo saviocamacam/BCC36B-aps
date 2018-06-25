@@ -2,27 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a9bf8958-0895-490b-bc18-dfb87785b16a" name="Default" comment="Programa compila, mas ainda não exibe a árvore em estrutura parentizada">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../compiladores-calculadora/calclex.py" afterPath="$PROJECT_DIR$/../compiladores-calculadora/calclex.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../compiladores-caleidoscopio/README.md" afterPath="$PROJECT_DIR$/../compiladores-caleidoscopio/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser.py" afterPath="$PROJECT_DIR$/parser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parsetab.py" afterPath="$PROJECT_DIR$/parsetab.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/bubble_sort.tpp" afterPath="$PROJECT_DIR$/testes/bubble_sort.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/erro-001.tpp" afterPath="$PROJECT_DIR$/testes/erro-001.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/erro-002.tpp" afterPath="$PROJECT_DIR$/testes/erro-002.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/erro-003.tpp" afterPath="$PROJECT_DIR$/testes/erro-003.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/erro-004.tpp" afterPath="$PROJECT_DIR$/testes/erro-004.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/erro-005.tpp" afterPath="$PROJECT_DIR$/testes/erro-005.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/erro-006.tpp" afterPath="$PROJECT_DIR$/testes/erro-006.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/erro-007.tpp" afterPath="$PROJECT_DIR$/testes/erro-007.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/expressoes.tpp" afterPath="$PROJECT_DIR$/testes/expressoes.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/fat.tpp" afterPath="$PROJECT_DIR$/testes/fat.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/multiplicavetor.tpp" afterPath="$PROJECT_DIR$/testes/multiplicavetor.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/primo.tpp" afterPath="$PROJECT_DIR$/testes/primo.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/somavet.tpp" afterPath="$PROJECT_DIR$/testes/somavet.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/teste-1.tpp" afterPath="$PROJECT_DIR$/testes/teste-1.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes/teste-2.tpp" afterPath="$PROJECT_DIR$/testes/teste-2.tpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testes2/teste10.tpp" afterPath="$PROJECT_DIR$/testes2/teste10.tpp" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/parserSemantic.py" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiladores-march.iml" afterPath="$PROJECT_DIR$/.idea/compiladores-march.iml" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/lexer.py" afterPath="$PROJECT_DIR$/lexer.py" />
+      <change beforePath="$PROJECT_DIR$/parser.py" afterPath="$PROJECT_DIR$/parser.py" />
+      <change beforePath="$PROJECT_DIR$/parsetab.py" afterPath="$PROJECT_DIR$/parsetab.py" />
+      <change beforePath="$PROJECT_DIR$/relatorio/fase2/BCC__BCC36B__P2__savio_1648160.pdf" afterPath="$PROJECT_DIR$/relatorio/fase2/BCC__BCC36B__P2__savio_1648160.pdf" />
+      <change beforePath="$PROJECT_DIR$/testes/sintatica-testes.zip" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/testes2/teste2.tpp" afterPath="$PROJECT_DIR$/testes2/teste2.tpp" />
+      <change beforePath="$PROJECT_DIR$/testes2/teste7.tpp" afterPath="$PROJECT_DIR$/testes2/teste7.tpp" />
+      <change beforePath="$PROJECT_DIR$/testes2/teste8.tpp" afterPath="$PROJECT_DIR$/testes2/teste8.tpp" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,17 +25,17 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/compiladores_march$lexer__1_.coverage" NAME="lexer (1) Coverage Results" MODIFIED="1508014370134" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/compiladores_march$parser.coverage" NAME="parser Coverage Results" MODIFIED="1509098636653" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/compiladores_march$parser.coverage" NAME="parser Coverage Results" MODIFIED="1528931623487" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/compiladores_march$lexer.coverage" NAME="lexer Coverage Results" MODIFIED="1508014229370" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../compiladores-caleidoscopio" />
+    <SUITE FILE_PATH="coverage/compiladores_march$lexer__1_.coverage" NAME="lexer (1) Coverage Results" MODIFIED="1526512517420" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="parser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="652">
-              <caret line="95" column="70" lean-forward="false" selection-start-line="95" selection-start-column="70" selection-end-line="95" selection-end-column="70" />
+            <state relative-caret-position="7752">
+              <caret line="462" column="0" lean-forward="false" selection-start-line="462" selection-start-column="0" selection-end-line="462" selection-end-column="0" />
               <folding>
                 <element signature="e#255#277#0" expanded="true" />
               </folding>
@@ -51,41 +43,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lexer.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lexer.py">
+      <file leaf-file-name="parserSemantic.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/parserSemantic.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="91">
-              <caret line="67" column="0" lean-forward="false" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bubble_sort.tpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testes/bubble_sort.tpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="12" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="teste10.tpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testes2/teste10.tpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="38" column="3" lean-forward="false" selection-start-line="38" selection-start-column="3" selection-end-line="38" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="teste-2.tpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/testes/teste-2.tpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="17" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="32" selection-end-column="3" />
+            <state relative-caret-position="170">
+              <caret line="10" column="29" lean-forward="false" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -102,15 +64,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>expressao</find>
-      <find>relacional</find>
-      <find>expressao_unaria</find>
-      <find>OR</find>
-      <find>minux</find>
-      <find>então</find>
-      <find>entao</find>
-      <find>or</find>
-      <find>corpo</find>
       <find>_</find>
       <find>chamada</find>
       <find>parametros</find>
@@ -127,11 +80,20 @@
       <find>repita</find>
       <find>dimensi</find>
       <find>dimens</find>
-      <find>tipo</find>
       <find>parametro</find>
       <find>dimensio</find>
       <find>erro de decl</find>
       <find>funcao</find>
+      <find>lista_variaveis</find>
+      <find>program</find>
+      <find>OR</find>
+      <find>condicional</find>
+      <find>NOT</find>
+      <find>expressao_simples</find>
+      <find>tipo</find>
+      <find>flutuante</find>
+      <find>erro sintático no índice</find>
+      <find>scope</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -153,13 +115,19 @@
         <option value="$PROJECT_DIR$/../compiladores-caleidoscopio/parser.py" />
         <option value="$PROJECT_DIR$/tinny.py" />
         <option value="$PROJECT_DIR$/testes/teste2.tpp" />
-        <option value="$PROJECT_DIR$/lexer.py" />
         <option value="$PROJECT_DIR$/testes/teste3.tpp" />
         <option value="$PROJECT_DIR$/testes/teste4.tpp" />
         <option value="$PROJECT_DIR$/testes/teste5.tpp" />
         <option value="$PROJECT_DIR$/testes/teste10.tpp" />
         <option value="$PROJECT_DIR$/testes2/teste10.tpp" />
+        <option value="$PROJECT_DIR$/testes2/teste7.tpp" />
+        <option value="$PROJECT_DIR$/testes2/teste2.tpp" />
+        <option value="$PROJECT_DIR$/lexer.py" />
+        <option value="$PROJECT_DIR$/testes2/teste8.tpp" />
+        <option value="$PROJECT_DIR$/sintatica-testes/erro-0006.tpp" />
         <option value="$PROJECT_DIR$/parser.py" />
+        <option value="$PROJECT_DIR$/sintatica-testes/erro-006.tpp" />
+        <option value="$PROJECT_DIR$/parserSemantic.py" />
       </list>
     </option>
   </component>
@@ -170,10 +138,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="547" />
-    <option name="y" value="335" />
-    <option name="width" value="974" />
-    <option name="height" value="788" />
+    <option name="x" value="-288" />
+    <option name="y" value="-1088" />
+    <option name="width" value="1936" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -213,32 +181,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="compiladores-march" type="b2602c69:ProjectViewProjectNode" />
-              <item name="compiladores-march" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="compiladores-march" type="b2602c69:ProjectViewProjectNode" />
-              <item name="compiladores-march" type="462c0819:PsiDirectoryNode" />
-              <item name="testes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="compiladores-march" type="b2602c69:ProjectViewProjectNode" />
-              <item name="compiladores-march" type="462c0819:PsiDirectoryNode" />
-              <item name="testes2" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="compiladores-march" type="b2602c69:ProjectViewProjectNode" />
-              <item name="compiladores-caleidoscopio" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <expand>
@@ -250,12 +192,24 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="compiladores-march" type="b2602c69:ProjectViewProjectNode" />
+              <item name="compiladores-march" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Compiladores" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
   </component>
@@ -294,6 +248,7 @@
       <option name="PARAMETERS" value="example.txt" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
     <configuration name="calcyacc" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -312,8 +267,9 @@
       <option name="PARAMETERS" value="example.txt" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="lexer (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="lexer (1)" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -327,9 +283,10 @@
       <module name="compiladores-march" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lexer.py" />
-      <option name="PARAMETERS" value="testes/teste2.tpp" />
+      <option name="PARAMETERS" value="sintatica-testes/erro-006.tpp" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
     <configuration name="lexer" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -348,6 +305,7 @@
       <option name="PARAMETERS" value="testes/teste2.tpp" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
     <configuration name="parser" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -363,9 +321,10 @@
       <module name="compiladores-march" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/parser.py" />
-      <option name="PARAMETERS" value="testes2/teste10.tpp" />
+      <option name="PARAMETERS" value="sintatica-testes/expressoes.tpp" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.calclex" />
@@ -375,10 +334,9 @@
       <item index="4" class="java.lang.String" itemvalue="Python.calcyacc" />
     </list>
     <recent_temporary>
-      <list size="3">
+      <list size="2">
         <item index="0" class="java.lang.String" itemvalue="Python.parser" />
-        <item index="1" class="java.lang.String" itemvalue="Python.lexer (1)" />
-        <item index="2" class="java.lang.String" itemvalue="Python.calcyacc" />
+        <item index="1" class="java.lang.String" itemvalue="Python.calcyacc" />
       </list>
     </recent_temporary>
   </component>
@@ -407,21 +365,21 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
+    <frame x="-288" y="-1088" width="1936" height="1096" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.100520834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3979933" sideWeight="0.5053111" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943144" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24583334" sideWeight="0.49791667" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18740515" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4816984" sideWeight="0.49791667" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18488745" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1265625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18740515" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17849898" sideWeight="0.49468893" order="14" side_tool="false" content_ui="tabs" x="0" y="339" width="1920" height="402" />
-      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17849898" sideWeight="0.49468893" order="14" side_tool="false" content_ui="tabs" x="0" y="339" width="1920" height="402" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -431,10 +389,12 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21070234" sideWeight="0.4969651" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3288889" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -452,7 +412,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/parser.py</url>
-          <line>34</line>
+          <line>37</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
@@ -467,70 +427,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lexica-testes/teste5.tpp" />
-    <entry file="file://$PROJECT_DIR$/lexica-testes/teste-completo.tpp" />
-    <entry file="file://$PROJECT_DIR$/lexica-testes/teste9.tpp" />
-    <entry file="file://$PROJECT_DIR$/lexer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="55" column="32" lean-forward="false" selection-start-line="55" selection-start-column="32" selection-end-line="55" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lexica-testes/teste5.tpp" />
-    <entry file="file://$PROJECT_DIR$/lexica-testes/teste9.tpp" />
-    <entry file="file://$PROJECT_DIR$/lexer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1782">
-          <caret line="99" column="37" lean-forward="false" selection-start-line="99" selection-start-column="37" selection-end-line="99" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lexica-testes/teste9.tpp" />
-    <entry file="file://$PROJECT_DIR$/lexer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="55" column="10" lean-forward="true" selection-start-line="55" selection-start-column="10" selection-end-line="55" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lexica-testes/teste9.tpp" />
-    <entry file="file://$PROJECT_DIR$/lexer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1134">
-          <caret line="63" column="16" lean-forward="false" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lexer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="18" lean-forward="false" selection-start-line="0" selection-start-column="18" selection-end-line="0" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lexica-testes/teste9.tpp" />
-    <entry file="file://$PROJECT_DIR$/../compiladores-calculadora/calclex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="16" lean-forward="false" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lexer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1173">
-          <caret line="69" column="20" lean-forward="false" selection-start-line="69" selection-start-column="20" selection-end-line="69" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../compiladores-calculadora/calclex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lexer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -563,42 +459,11 @@
     <entry file="file://$PROJECT_DIR$/lexica-testes/teste9.tpp" />
     <entry file="file://$PROJECT_DIR$/lexica-testes/teste-completo.tpp" />
     <entry file="file://$PROJECT_DIR$/lexica-testes/teste5.tpp" />
-    <entry file="file://$PROJECT_DIR$/gen.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../compiladores-caleidoscopio/lexer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../compiladores-calculadora/calclex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-595">
-          <caret line="7" column="21" lean-forward="true" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../compiladores-calculadora/README.md">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../compiladores-caleidoscopio/lexer.py" />
+    <entry file="file://$PROJECT_DIR$/../compiladores-calculadora/calclex.py" />
+    <entry file="file://$PROJECT_DIR$/../compiladores-calculadora/README.md" />
     <entry file="file://$PROJECT_DIR$/../compiladores-calculadora/calcyacc.py" />
-    <entry file="file://$PROJECT_DIR$/../compiladores-calculadora/example.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="10" lean-forward="false" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../compiladores-calculadora/example.txt" />
     <entry file="file://$PROJECT_DIR$/testes/teste-completo.tpp" />
     <entry file="file://$PROJECT_DIR$/testes/teste8.tpp" />
     <entry file="file://$PROJECT_DIR$/testes/teste9.tpp" />
@@ -617,31 +482,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/ply/yacc.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="3286" column="0" lean-forward="false" selection-start-line="3286" selection-start-column="0" selection-end-line="3286" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/ply/yacc.py" />
     <entry file="file://$PROJECT_DIR$/testes/teste3.tpp" />
     <entry file="file://$PROJECT_DIR$/testes/teste4.tpp" />
-    <entry file="file://$PROJECT_DIR$/../compiladores-caleidoscopio/parser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="123" column="15" lean-forward="false" selection-start-line="123" selection-start-column="10" selection-end-line="123" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/ply/lex.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="349" column="0" lean-forward="false" selection-start-line="349" selection-start-column="0" selection-end-line="349" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../compiladores-caleidoscopio/parser.py" />
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/ply/lex.py" />
     <entry file="file://$PROJECT_DIR$/parsetab.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -653,44 +498,158 @@
     <entry file="file://$PROJECT_DIR$/testes/teste1.tpp" />
     <entry file="file://$PROJECT_DIR$/testes/teste5.tpp" />
     <entry file="file://$PROJECT_DIR$/testes/teste10.tpp" />
-    <entry file="file://$PROJECT_DIR$/lexer.py">
+    <entry file="file://$PROJECT_DIR$/testes/teste-2.tpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="67" column="0" lean-forward="false" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="153">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testes2/teste5.tpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testes2/teste6.tpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="4" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="7" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testes2/teste10.tpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/testes/bubble_sort.tpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="8" column="12" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-          <folding />
+          <caret line="8" column="12" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testes2/teste10.tpp">
+    <entry file="file://$PROJECT_DIR$/testes2/teste8.tpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="38" column="3" lean-forward="false" selection-start-line="38" selection-start-column="3" selection-end-line="38" selection-end-column="3" />
-          <folding />
+        <state relative-caret-position="51">
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testes2/teste2.tpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="27" lean-forward="false" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testes2/teste7.tpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="19" column="26" lean-forward="false" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sintatica-testes/erro-007.tpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-102">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sintatica-testes/erro-003.tpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sintatica-testes/erro-0006.tpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="7" lean-forward="false" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sintatica-testes/erro-002.tpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="18" lean-forward="false" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sintatica-testes/erro-004.tpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="5" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sintatica-testes/erro-005.tpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sintatica-testes/erro-006.tpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="3" lean-forward="false" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sintatica-testes/expressoes.tpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="26" lean-forward="false" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sintatica-testes/erro-001.tpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gen.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lexer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/parser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="652">
-          <caret line="95" column="70" lean-forward="false" selection-start-line="95" selection-start-column="70" selection-end-line="95" selection-end-column="70" />
+        <state relative-caret-position="7752">
+          <caret line="462" column="0" lean-forward="false" selection-start-line="462" selection-start-column="0" selection-end-line="462" selection-end-column="0" />
           <folding>
             <element signature="e#255#277#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testes/teste-2.tpp">
+    <entry file="file://$PROJECT_DIR$/parserSemantic.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="17" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="32" selection-end-column="3" />
+        <state relative-caret-position="170">
+          <caret line="10" column="29" lean-forward="false" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
           <folding />
         </state>
       </provider>
