@@ -463,38 +463,11 @@ def generateTree(t):
 
 if __name__ == '__main__':
     from sys import argv, exit
-    from selenium import webdriver
-    from selenium.webdriver.common.keys import Keys
-    from time import sleep
-    import base64
-
     config = 1
     if config:
-        old_stdout = sys.stdout
-        result = StringIO()
-        sys.stdout = result
-
         f = open(argv[1],  encoding='utf-8')
         p = Parser(f.read())
         generateTree(p.ast)
-
-        sys.stdout = old_stdout
-        result_string = result.getvalue()
-        #result_string = result_string.replace('\n', '')
-        #result_string = result_string.replace('\t', '')
-        print(result_string)
-
-        ff = "C:/Users/savio/Downloads/geckodriver.exe"
-        driver = webdriver.Firefox(executable_path=ff)
-        driver.get("http://127.0.0.1:5500/")
-
-        inputElement = driver.find_element_by_id("i")
-        #inputElement.clear()
-        driver.execute_script(
-            "document.querySelector('#i').innerHTML = arguments[0]", result_string)
-        inputElement.send_keys(' ')
-
-
 
     else:
         import glob, os
