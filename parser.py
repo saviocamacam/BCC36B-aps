@@ -12,6 +12,7 @@ from io import StringIO  # Python3
 
 import sys
 
+
 class Scope:
 
     def __init__(self, name):
@@ -22,10 +23,12 @@ class Scope:
     def get_entries(self):
         return self.entries
 
+
 class Entry:
     def __init__(self, name, valor):
         self.name = name
         self.valor = valor
+
 
 class Tree:
 
@@ -36,6 +39,7 @@ class Tree:
 
     def __str__(self):
         return self.type
+
 
 class Parser:
 
@@ -452,14 +456,15 @@ class Parser:
             exit(1)
 
 
-def generateTree(t):
+def generatetree(t):
     if t is not None:
         print('['+ t.type + ' ' + t.value)
 
         for node in t.child:
             i = t.child.index(node)
-            generateTree(t.child[i])
+            generatetree(t.child[i])
         print(']')
+
 
 if __name__ == '__main__':
     from sys import argv, exit
@@ -467,7 +472,7 @@ if __name__ == '__main__':
     if config:
         f = open(argv[1],  encoding='utf-8')
         p = Parser(f.read())
-        generateTree(p.ast)
+        generatetree(p.ast)
 
     else:
         import glob, os
@@ -478,4 +483,4 @@ if __name__ == '__main__':
             print(file.title())
             f = open(file,  encoding='utf-8')
             p = Parser(f.read())
-            generateTree(p.ast)
+            generatetree(p.ast)
