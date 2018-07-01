@@ -41,7 +41,7 @@ class Tree:
         return self.type
 
 
-class Parser:
+class MyParser:
 
     def __init__(self, code):
         lex = Lexer()
@@ -197,7 +197,12 @@ class Parser:
             | empty
         '''
         if len(p) == 3:
-            p[0] = Tree('corpo', [p[1], p[2]])
+            if p[1] is None:
+                p[0] = Tree('corpo', [p[2]])
+            elif p[2] is None:
+                p[0] = Tree('corpo', [p[1]])
+            else:
+                p[0] = Tree('corpo', [p[1], p[2]])
         '''elif len(p) == 2:
             p[0] = Tree('corpo', [p[1]])'''
 
@@ -471,7 +476,7 @@ if __name__ == '__main__':
     config = 1
     if config:
         f = open(argv[1],  encoding='utf-8')
-        p = Parser(f.read())
+        p = MyParser(f.read())
         generatetree(p.ast)
 
     else:
@@ -482,5 +487,5 @@ if __name__ == '__main__':
         for file in glob.glob("*.tpp"):
             print(file.title())
             f = open(file,  encoding='utf-8')
-            p = Parser(f.read())
+            p = MyParser(f.read())
             generatetree(p.ast)
