@@ -24,43 +24,50 @@ class Tree:
         return self.type
 
 
+def is_in(t):
+    if t.type in {'indice',
+                  'expressao',
+                  'declaracao',
+                  'declaracao-funcao',
+                  'expressao-simples',
+                  'expressao-aditiva',
+                  'expressao-multiplicativa',
+                  'expressao-unaria',
+                  'fator',
+                  'lista-variaveis',
+                  'lista-declaracoes',
+                  'acao',
+                  'lista-parametros',
+                  'corpo',
+                  'lista-argumentos',
+                  'lista-dimensions',
+                  'inicializacao-variaveis',
+                  'atribuicao'}:
+        return True
+    else:
+        return False
+
+
 def generatePrunedTree(t):
     if t is not None:
-        if len(t.child) == 1 and t.type in {'indice',
-                                            'expressao',
-                                            'declaracao',
-                                            'declaracao-funcao',
-                                            'expressao-simples',
-                                            'expressao-aditiva',
-                                            'expressao-multiplicativa',
-                                            'expressao-unaria',
-                                            'fator',
-                                            'lista-variaveis',
-                                            'lista-declaracoes',
-                                            'acao',
-                                            'lista-parametros',
-                                            'corpo',
-                                            'lista-argumentos',
-                                            'lista-dimensions',
-                                            'inicializacao-variaveis',
-                                            'atribuicao'}:
+        if len(t.child) == 1 and is_in(t):
             generatePrunedTree(t.child[0])
         else:
-            if(t.type and t.value):
+            if t.type and t.value:
                 print('[' + t.value)
             else:
                 print('[')
-                if(t.type == 'atribuicao'):
+                if t.type == 'atribuicao':
                     print(':=')
-                elif (t.type == 'expressao-aditiva'):
+                elif t.type == 'expressao-aditiva':
                     print(t.child[1].value)
-                elif (t.type == 'operador_relacional'):
+                elif t.type == 'operador_relacional':
                     print(t.child[1].value)
                 else:
                     print(t.type)
             for node in t.child:
                 i = t.child.index(node)
-                if(t.child[i].type not in {'operador-soma', 'simbolo-atribuicao', 'operador-relacional'}):
+                if t.child[i].type not in {'operador-soma', 'simbolo-atribuicao', 'operador-relacional'}:
                     generatePrunedTree(t.child[i])
             print(']')
 
@@ -75,16 +82,42 @@ def printPrunnedTree(tree):
         print(']')
 
 
-if __name__ == '__main__':
+def buildPrunedTreeFromString(result_string):
+    tree = list(result_string)
+    leftPar = 0
+    rightPar = 0
+    buffer = ''
+    for char in tree:
+        if(char == '['):
+            leftPar += 1
+        else:
+            buffer += char
+
+
+if __name__ == "__main__":
     from sys import argv, exit
+    import sys
+    from io import StringIO
 
     config = 1
     if config:
+        old_stdout = sys.stdout
+        result = StringIO()
+        sys.stdout = result
+
         f = open(argv[1], encoding='utf-8')
         s = Semantica(f.read())
         generatePrunedTree(s.tree)
-
+        print('\n>>\n')
         printPrunnedTree(s.tree)
+
+        sys.stdout = old_stdout
+        result_string = result.getvalue()
+        # result_string = result_string.replace('\n', '')
+        # result_string = result_string.replace('\t', '')
+        print(result_string)
+
+        # s.newTree = buildPrunedTreeFromString(result_string)
 
     else:
         import glob, os
