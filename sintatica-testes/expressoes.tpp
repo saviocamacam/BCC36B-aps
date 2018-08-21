@@ -13,7 +13,7 @@ inteiro principal()
 
     b := b + func(a)
 
-    b := +b + i
+    b := - b + i
     
     retorna(0)
 fim

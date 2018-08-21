@@ -1,10 +1,11 @@
-#-*- coding: utf-8 -*-
-#-------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+# -------------------------------------------------------------------------
 # lexer.py
 # Analisador léxico para a linguagem Tinnny++
 # Autores: Sávio Camacam
-#-------------------------------------------------------------------------
-from parser import MyParser
+# -------------------------------------------------------------------------
+
+from myparser import MyParser
 
 
 class Semantica:
@@ -63,6 +64,11 @@ def generatePrunedTree(t):
                     print(t.child[1].value)
                 elif t.type == 'operador_relacional':
                     print(t.child[1].value)
+                elif t.type == 'expressao-unaria':
+                    if(t.child[0].type == 'operador-soma' and t.child[0].value == '+'):
+                        print('+')
+                    elif (t.child[0].type == 'operador-soma' and t.child[0].value == '-'):
+                        print('-')
                 else:
                     print(t.type)
             for node in t.child:
@@ -74,7 +80,7 @@ def generatePrunedTree(t):
 
 def printPrunnedTree(tree):
     if tree is not None:
-        print('['+ tree.type + ' ' + tree.value)
+        print('[' + tree.type + ' ' + tree.value)
 
         for node in tree.child:
             i = tree.child.index(node)
@@ -120,7 +126,8 @@ if __name__ == "__main__":
         # s.newTree = buildPrunedTreeFromString(result_string)
 
     else:
-        import glob, os
+        import glob
+        import os
 
         path = "C:/Users/savio/git/compiladores-march/testes"
         os.chdir(path)
