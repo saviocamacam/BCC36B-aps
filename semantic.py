@@ -49,10 +49,10 @@ def is_in(t):
         return False
 
 
-def generatePrunedTree(t):
+def printIdealTree(t):
     if t is not None:
         if len(t.child) == 1 and is_in(t):
-            generatePrunedTree(t.child[0])
+            printIdealTree(t.child[0])
         else:
             if t.type and t.value:
                 print('[' + t.value)
@@ -74,30 +74,55 @@ def generatePrunedTree(t):
             for node in t.child:
                 i = t.child.index(node)
                 if t.child[i].type not in {'operador-soma', 'simbolo-atribuicao', 'operador-relacional'}:
-                    generatePrunedTree(t.child[i])
+                    printIdealTree(t.child[i])
             print(']')
+
+
+def buildPrunnetTree(t):
+    if t is not None:
+        if len(t.child) == 1 and is_in(t):
+            i = t.parent.child.index(t)
+
+            t.parent.child[i] = t.child[0]
+            if(t.child[0]):
+                t.child[0].parent = t.parent
+                buildPrunnetTree(t.parent.child[i])
+
+        else:
+
+            if t.type == 'atribuicao':
+                t.type = ':='
+            elif t.type == 'expressao-aditiva':
+                t.type = t.child[1].value
+            elif t.type == 'operador_relacional':
+                t.type = t.child[1].value
+
+            elif t.type == 'expressao-unaria':
+                if(t.child[0].type == 'operador-soma' and t.child[0].value == '+'):
+                    t.type = '+'
+                elif (t.child[0].type == 'operador-soma' and t.child[0].value == '-'):
+                    t.type = '-'
+
+            for node in t.child:
+                i = t.child.index(node)
+                if t.child[i] and t.child[i].type in {'operador-soma', 'simbolo-atribuicao', 'operador-relacional'}:
+                    t.child[i] = None
+                buildPrunnetTree(t.child[i])
+
 
 
 def printPrunnedTree(tree):
     if tree is not None:
-        print('[' + tree.type + ' ' + tree.value)
+        if tree.type and tree.value:
+            print('[' + tree.value)
+        else:
+            print('[' + tree.type + ' ' + tree.value)
 
         for node in tree.child:
             i = tree.child.index(node)
             printPrunnedTree(tree.child[i])
         print(']')
 
-
-def buildPrunedTreeFromString(result_string):
-    tree = list(result_string)
-    leftPar = 0
-    rightPar = 0
-    buffer = ''
-    for char in tree:
-        if(char == '['):
-            leftPar += 1
-        else:
-            buffer += char
 
 
 if __name__ == "__main__":
@@ -113,8 +138,9 @@ if __name__ == "__main__":
 
         f = open(argv[1], encoding='utf-8')
         s = Semantica(f.read())
-        generatePrunedTree(s.tree)
-        print('\n>>\n')
+        # printIdealTree(s.tree)
+        # print('\n>>\n')
+        buildPrunnetTree(s.tree)
         printPrunnedTree(s.tree)
 
         sys.stdout = old_stdout
@@ -136,4 +162,6 @@ if __name__ == "__main__":
             print(file.title())
             f = open(file, encoding='utf-8')
             s = Semantica(f.read())
-            generatePrunedTree(s.tree)
+            buildPrunnetTree(s.tree)
+            print('\n>>\n')
+            printPrunnedTree(s.tree)

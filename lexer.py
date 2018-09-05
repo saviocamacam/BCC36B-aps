@@ -52,17 +52,17 @@ class Lexer:
     t_AND = r'&&'
     t_OR = r'\|\|'
 
+
+
+    def t_FLUTUANTE(self, t):
+        r'[0-9]*\.[0-9]+([eE][-+]?[0-9]+)?'
+        t.type = self.keywords.get(t.value,'FLUTUANTE')
+        return t
+
     def t_INTEIRO(self, t):
         r'[0-9][0-9]*'
         t.type = self.keywords.get(t.value, 'INTEIRO')
         return t
-
-    def t_FLUTUANTE(self, t):
-        r'[0-9][0-9]*\.[0-9]*([Ee][-]?[0-9]+)?'
-        t.type = self.keywords.get(t.value,'FLUTUANTE')
-        return t
-
-
 
     def t_ID(self, t):
         r'[a-zA-Zá-ñÁ-Ñ][a-zA-Zá-ñÁ-Ñ0-9_]*'

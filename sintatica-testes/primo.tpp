@@ -1,3 +1,10 @@
+inteiro: a, b
+flutuante: d, e
+
+func(inteiro: a, flutuante: v)
+
+fim
+
 inteiro principal()
 	inteiro: digitado
 	inteiro: i
