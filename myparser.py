@@ -90,14 +90,15 @@ class MyParser:
         '''
         declaracao : declaracao_variaveis
             | inicializacao_variaveis
-            | declaracao_funcao
+            | declaracao_funcao_nova
             | error
         '''
         if p.slice[1].type == "error":
             print("Erro de declaracao na linha " + str(p.slice[1].lineno))
         else:
             p[0] = Tree('declaracao', [p[1]])
-            p[1].parent = p[0]
+            if p[1]:
+                p[1].parent = p[0]
 
     def p_declaracao_variaveis(self, p):
         'declaracao_variaveis : tipo COLON lista_variaveis'
@@ -113,6 +114,34 @@ class MyParser:
         'inicializacao_variaveis : atribuicao'
         p[0] = Tree('inicializacao-variaveis', [p[1]])
         p[1].parent = p[0]
+
+    def p_declaracao_funcao_nova(self, p):
+        '''
+        declaracao_funcao_nova : INTEIRO ID LPAR lista_parametros RPAR corpo retorna FIM
+            | FLUTUANTE ID LPAR lista_parametros RPAR corpo retorna FIM
+            | ID LPAR lista_parametros RPAR corpo FIM
+        '''
+        if(len(p) == 8):
+            if (not p[4]):
+                p[0] = Tree('declaracao-funcao', [p[6]], p[2])
+                p[6].parent = p[0]
+            else:
+                p[0] = Tree('declaracao-funcao', [p[4], p[6]], p[2])
+        else:
+            if (p[3] is None):
+                p[0] = Tree('cabecalho', [p[5]], p[1])
+                p[5].parent = p[0]
+            else:
+                p[0] = Tree('cabecalho', [p[3], p[5]], p[1])
+                p[3].parent = p[0]
+                if(p[5]):
+                    p[5].parent = p[0]
+
+    def p_declaracao_funcao_nova_error(self, p):
+        '''declaracao_funcao_nova : INTEIRO ID LPAR lista_parametros RPAR corpo error FIM
+            | FLUTUANTE ID LPAR lista_parametros RPAR corpo error FIM
+        '''
+        print("Error: Função " + p[2] + " precisa retornar um valor " + p[1] + " mas retorna vazio na linha " + str(p.slice[7].lineno));
 
     def p_declaracao_funcao(self, p):
         '''

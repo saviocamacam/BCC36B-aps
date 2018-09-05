@@ -80,7 +80,7 @@ def printIdealTree(t):
 
 def buildPrunnetTree(t):
     if t is not None:
-        if len(t.child) == 1 and is_in(t):
+        if len(t.child) == 1 and is_in(t) and t.parent:
             i = t.parent.child.index(t)
 
             t.parent.child[i] = t.child[0]

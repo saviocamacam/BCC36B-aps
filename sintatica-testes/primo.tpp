@@ -1,7 +1,7 @@
 inteiro: a, b
 flutuante: d, e
 
-func(inteiro: a, flutuante: v)
+flutuante func(inteiro: a, flutuante: v)
 
 fim
 
