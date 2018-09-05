@@ -121,12 +121,12 @@ class MyParser:
             | FLUTUANTE ID LPAR lista_parametros RPAR corpo retorna FIM
             | ID LPAR lista_parametros RPAR corpo FIM
         '''
-        if(len(p) == 8):
+        if(len(p) == 9):
             if (not p[4]):
-                p[0] = Tree('declaracao-funcao', [p[6]], p[2])
+                p[0] = Tree('declaracao-funcao', [p[6], p[7]], p[2])
                 p[6].parent = p[0]
             else:
-                p[0] = Tree('declaracao-funcao', [p[4], p[6]], p[2])
+                p[0] = Tree('declaracao-funcao', [p[4], p[6], p[7]], p[2])
         else:
             if (p[3] is None):
                 p[0] = Tree('cabecalho', [p[5]], p[1])

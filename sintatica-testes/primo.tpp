@@ -2,7 +2,7 @@ inteiro: a, b
 flutuante: d, e
 
 flutuante func(inteiro: a, flutuante: v)
-
+    retorna(1)
 fim
 
 inteiro principal()
@@ -22,5 +22,6 @@ inteiro principal()
 		fim
 		i := i+1
 	até i <= digitado
+	retorna(1)
 fim
 
