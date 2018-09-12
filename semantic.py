@@ -49,6 +49,17 @@ def is_in(t):
         return False
 
 
+def analysis(t):
+    if t is not None:
+        if t.type == 'program':
+            for node in t.child:
+                i = t.child.index(node)
+
+        for node in t.child:
+            i = t.child.index(node)
+            analysis(t.child[i])
+
+
 def printIdealTree(t):
     if t is not None:
         if len(t.child) == 1 and is_in(t):
@@ -89,8 +100,21 @@ def buildPrunnetTree(t):
                 buildPrunnetTree(t.parent.child[i])
 
         else:
-
-            if t.type == 'atribuicao':
+            if t.type == 'lista-variaveis':
+                newChild = []
+                newChild.append(t.child[1])
+                node = t.child[0]
+                while len(node.child) == 2 and node.type == 'lista-variaveis':
+                    node.child[1].parent = t
+                    newChild.append(node.child[1])
+                    node = node.child[0]
+                node.child[0].parent = t
+                newChild.append(node.child[0])
+                newChild.reverse()
+                t.child = newChild
+                for node in t.child:
+                    print(node.parent.type)
+            elif t.type == 'atribuicao':
                 t.type = ':='
             elif t.type == 'expressao-aditiva':
                 t.type = t.child[1].value
@@ -110,7 +134,6 @@ def buildPrunnetTree(t):
                 buildPrunnetTree(t.child[i])
 
 
-
 def printPrunnedTree(tree):
     if tree is not None:
         if tree.type and tree.value:
@@ -122,7 +145,6 @@ def printPrunnedTree(tree):
             i = tree.child.index(node)
             printPrunnedTree(tree.child[i])
         print(']')
-
 
 
 if __name__ == "__main__":
@@ -142,6 +164,7 @@ if __name__ == "__main__":
         # print('\n>>\n')
         buildPrunnetTree(s.tree)
         printPrunnedTree(s.tree)
+        # analysis(s.tree)
 
         sys.stdout = old_stdout
         result_string = result.getvalue()

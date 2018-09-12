@@ -17,7 +17,7 @@ class Scope:
     def __init__(self, name):
         self.name = name
         self.subscopes = []
-        self.entries = []
+        self.entries = {}
 
     def get_entries(self):
         return self.entries
@@ -90,7 +90,7 @@ class MyParser:
         '''
         declaracao : declaracao_variaveis
             | inicializacao_variaveis
-            | declaracao_funcao_nova
+            | declaracao_funcao
             | error
         '''
         if p.slice[1].type == "error":
