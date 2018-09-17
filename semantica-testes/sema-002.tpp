@@ -5,14 +5,14 @@
 
 inteiro: a
 flutuante: b
-inteiro: c[1][2]
+inteiro: c[1][2][3]
 
-flutuante func(inteiro:a, flutuante:b)
+flutuante func(inteiro:a, flutuante:b, flutuante: c[][][])
 
     retorna(3)
 fim
 
 inteiro principal()
   c[5] := 10
-
+  fun(a, b, c)
 fim

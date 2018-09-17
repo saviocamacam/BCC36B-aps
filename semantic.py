@@ -89,6 +89,22 @@ def printIdealTree(t):
             print(']')
 
 
+def alingmentOfChilds(node, name):
+    newChild = []
+    newChild.append(node.child[1])
+    node = node.child[0]
+    while len(node.child) == 2 and node.type == name:
+        node.child[1].parent = node
+        newChild.append(node.child[1])
+        node = node.child[0]
+    node.child[0].parent = node
+    newChild.append(node.child[0])
+    newChild.reverse()
+    node.child = newChild
+    # for node in t.child:
+    #    print(node.parent.type)
+
+
 def buildPrunnetTree(t):
     if t is not None:
         if len(t.child) == 1 and is_in(t) and t.parent:
@@ -100,7 +116,79 @@ def buildPrunnetTree(t):
                 buildPrunnetTree(t.parent.child[i])
 
         else:
-            if t.type == 'lista-variaveis':
+            if t.type == 'corpo':
+                newChild = []
+                newChild.append(t.child[1])
+                node = t.child[0]
+                while len(node.child) == 2 and node.type == 'corpo':
+                    node.child[1].parent = t
+                    newChild.append(node.child[1])
+                    node = node.child[0]
+                node.child[0].parent = t
+                newChild.append(node.child[0])
+                newChild.reverse()
+                t.child = newChild
+            elif t.type == 'indice':
+                newChild = []
+                newChild.append(t.child[1])
+                node = t.child[0]
+                while len(node.child) == 2 and node.type == 'indice':
+                    node.child[1].parent = t
+                    newChild.append(node.child[1])
+                    node = node.child[0]
+                node.child[0].parent = t
+                newChild.append(node.child[0])
+                newChild.reverse()
+                t.child = newChild
+            elif t.type == 'lista-dimensions':
+                newChild = []
+                newChild.append(t.child[1])
+                node = t.child[0]
+                while len(node.child) == 2 and node.type == 'lista-dimensions':
+                    node.child[1].parent = t
+                    newChild.append(node.child[1])
+                    node = node.child[0]
+                node.child[0].parent = t
+                newChild.append(node.child[0])
+                newChild.reverse()
+                t.child = newChild
+            elif t.type == 'lista-argumentos':
+                newChild = []
+                newChild.append(t.child[1])
+                node = t.child[0]
+                while len(node.child) == 2 and node.type == 'lista-argumentos':
+                    node.child[1].parent = t
+                    newChild.append(node.child[1])
+                    node = node.child[0]
+                node.child[0].parent = t
+                newChild.append(node.child[0])
+                newChild.reverse()
+                t.child = newChild
+            elif t.type == 'lista-parametros':
+                newChild = []
+                newChild.append(t.child[1])
+                node = t.child[0]
+                while len(node.child) == 2 and node.type == 'lista-parametros':
+                    node.child[1].parent = t
+                    newChild.append(node.child[1])
+                    node = node.child[0]
+                node.child[0].parent = t
+                newChild.append(node.child[0])
+                newChild.reverse()
+                t.child = newChild
+            elif t.type == 'lista-declaracoes':
+                newChild = []
+                newChild.append(t.child[1])
+                node = t.child[0]
+                while len(node.child) == 2 and node.type == 'lista-declaracoes':
+                    node.child[1].parent = t
+                    newChild.append(node.child[1])
+                    node = node.child[0]
+                node.child[0].parent = t
+                newChild.append(node.child[0])
+                newChild.reverse()
+                t.child = newChild
+            elif t.type == 'lista-variaveis':
                 newChild = []
                 newChild.append(t.child[1])
                 node = t.child[0]
@@ -112,8 +200,7 @@ def buildPrunnetTree(t):
                 newChild.append(node.child[0])
                 newChild.reverse()
                 t.child = newChild
-                for node in t.child:
-                    print(node.parent.type)
+
             elif t.type == 'atribuicao':
                 t.type = ':='
             elif t.type == 'expressao-aditiva':
