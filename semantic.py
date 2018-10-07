@@ -26,27 +26,24 @@ class Tree:
 
 
 def is_in(t):
-    if t.type in {'indice',
-                  'expressao',
-                  'declaracao',
-                  'declaracao-funcao',
-                  'expressao-simples',
-                  'expressao-aditiva',
-                  'expressao-multiplicativa',
-                  'expressao-unaria',
-                  'fator',
-                  'lista-variaveis',
-                  'lista-declaracoes',
-                  'acao',
-                  'lista-parametros',
-                  'corpo',
-                  'lista-argumentos',
-                  'lista-dimensions',
-                  'inicializacao-variaveis',
-                  'atribuicao'}:
-        return True
-    else:
-        return False
+    return t.type in {'indice',
+                      'expressao',
+                      'declaracao',
+                      'declaracao-funcao',
+                      'expressao-simples',
+                      'expressao-aditiva',
+                      'expressao-multiplicativa',
+                      'expressao-unaria',
+                      'fator',
+                      'lista-variaveis',
+                      'lista-declaracoes',
+                      'acao',
+                      'lista-parametros',
+                      'corpo',
+                      'lista-argumentos',
+                      'lista-dimensions',
+                      'inicializacao-variaveis',
+                      'atribuicao'}
 
 
 def analysis(t):
@@ -55,6 +52,9 @@ def analysis(t):
             for node in t.child:
                 i = t.child.index(node)
 
+        if t.type == 'declaracao-variaveis':
+            for node in t.child:
+                print(node)
         for node in t.child:
             i = t.child.index(node)
             analysis(t.child[i])
