@@ -3,11 +3,11 @@
 {Aviso: Variável 'b' declarada e não utilizada}
 
 inteiro: a
-flutuante: b, r
+flutuante: a, b, r
 
 inteiro principal()
     flutuante: z, x, s
-    s:= 17 + 1.2
+    s:= 17 + 1.2 + 23
     se a > b então
         inteiro: f
 

@@ -51,10 +51,48 @@ def analysis(t):
         if t.type == 'program':
             for node in t.child:
                 i = t.child.index(node)
-
+        
         if t.type == 'declaracao-variaveis':
-            for node in t.child:
-                print(node)
+            print(t.type)
+            parent = t.parent
+            varType = t.child[0]
+            value = t.child[1]
+            if value.type == 'lista-variaveis':
+                for node in value.child:
+                    if node.value not in parent.scope.entries:
+                        parent.scope.entries[node.value] = {}    
+                        parent.scope.entries[node.value]['used'] = False
+                        parent.scope.entries[node.value]['varType'] = varType.value
+                    else:
+                        
+                        print("Erro declaração de variáveis: '" + node.value + "' já foi declarado")
+            else:
+                if value.value not in parent.scope.entries:
+                    parent.scope.entries[value.value] = {}
+                    parent.scope.entries[value.value]['used'] = False
+                    parent.scope.entries[value.value]['varType'] = varType.value
+                else:
+                    print("Erro declaração de variáveis: '" + value.value + "' já foi declarado")
+            # print(t.parent)
+            # print(t.parent.scope.entries)
+            # for node in t.child:
+            #     print(node)
+            #     print(node.value)
+        if t.type == 'var':
+            print(t.type)
+            parent = t.parent
+            found = False
+            while parent.type != 'program':
+                if t.value in parent.scope.entries:
+                    parent.scope.entries[t.value]['used'] = True
+                    found = True
+                    break
+                else:
+                    parent = parent.parent
+            if not found:
+                print("Variável '" + t.value + "' usada não declarada")
+                
+                    
         for node in t.child:
             i = t.child.index(node)
             analysis(t.child[i])
@@ -105,7 +143,7 @@ def alingmentOfChilds(node, name):
     #    print(node.parent.type)
 
 
-def buildPrunnetTree(t):
+def buildPrunnedTree(t):
     if t is not None:
         if len(t.child) == 1 and is_in(t) and t.parent:
             i = t.parent.child.index(t)
@@ -113,7 +151,7 @@ def buildPrunnetTree(t):
             t.parent.child[i] = t.child[0]
             if(t.child[0]):
                 t.child[0].parent = t.parent
-                buildPrunnetTree(t.parent.child[i])
+                buildPrunnedTree(t.parent.child[i])
 
         else:
             if t.type == 'corpo':
@@ -218,7 +256,18 @@ def buildPrunnetTree(t):
                 i = t.child.index(node)
                 if t.child[i] and t.child[i].type in {'operador-soma', 'simbolo-atribuicao', 'operador-relacional'}:
                     t.child[i] = None
-                buildPrunnetTree(t.child[i])
+                buildPrunnedTree(t.child[i])
+
+def verifyNotUsedVariables(tree):
+    if tree is not None:
+        if tree.scope.entries:
+            print(tree.scope)
+        for key in tree.scope.entries:
+            print(tree.scope.entries[key])
+
+        for node in tree.child:
+            i = tree.child.index(node)
+            verifyNotUsedVariables(tree.child[i])
 
 
 def printPrunnedTree(tree):
@@ -249,9 +298,10 @@ if __name__ == "__main__":
         s = Semantica(f.read())
         # printIdealTree(s.tree)
         # print('\n>>\n')
-        buildPrunnetTree(s.tree)
+        buildPrunnedTree(s.tree)
+        analysis(s.tree)
+        verifyNotUsedVariables(s.tree)
         printPrunnedTree(s.tree)
-        # analysis(s.tree)
 
         sys.stdout = old_stdout
         result_string = result.getvalue()
@@ -272,6 +322,6 @@ if __name__ == "__main__":
             print(file.title())
             f = open(file, encoding='utf-8')
             s = Semantica(f.read())
-            buildPrunnetTree(s.tree)
+            buildPrunnedTree(s.tree)
             print('\n>>\n')
             printPrunnedTree(s.tree)

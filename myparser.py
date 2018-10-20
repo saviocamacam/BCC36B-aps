@@ -22,6 +22,9 @@ class Scope:
     def get_entries(self):
         return self.entries
 
+    def __str__(self):
+        return self.name
+
 
 class Entry:
     def __init__(self, name, valor):
@@ -35,7 +38,7 @@ class Tree:
         self.type = type_node
         self.child = child
         self.value = value
-        self.sope = Scope(type_node)
+        self.scope = Scope(type_node)
 
     def __str__(self):
         return self.type
