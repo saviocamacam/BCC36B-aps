@@ -172,10 +172,12 @@ class MyParser:
         if(p[3] is None):
             p[0] = Tree('cabecalho', [p[5]], p[1])
             p[5].parent = p[0]
-        else:
+        elif p[3] and p[5]:
             p[0] = Tree('cabecalho', [p[3], p[5]], p[1])
             p[3].parent = p[0]
             p[5].parent = p[0]
+        else:
+            p[0] = Tree('cabecalho', [], p[1])
 
     def p_cabecalho_error(self, p):
         'cabecalho : ID LPAR lista_parametros RPAR corpo error'

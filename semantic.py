@@ -29,7 +29,7 @@ def is_in(t):
     return t.type in {'indice',
                       'expressao',
                       'declaracao',
-                      'declaracao-funcao',
+                    #   'declaracao-funcao',
                       'expressao-simples',
                       'expressao-aditiva',
                       'expressao-multiplicativa',
@@ -53,7 +53,6 @@ def analysis(t):
                 i = t.child.index(node)
         
         if t.type == 'declaracao-variaveis':
-            print(t.type)
             parent = t.parent
             varType = t.child[0]
             value = t.child[1]
@@ -62,24 +61,20 @@ def analysis(t):
                     if node.value not in parent.scope.entries:
                         parent.scope.entries[node.value] = {}    
                         parent.scope.entries[node.value]['used'] = False
+                        parent.scope.entries[node.value]['type'] = "variável"
                         parent.scope.entries[node.value]['varType'] = varType.value
                     else:
-                        
-                        print("Erro declaração de variáveis: '" + node.value + "' já foi declarado")
+                        print("Erro: variável '" + node.value + "' já foi declarada")
             else:
                 if value.value not in parent.scope.entries:
                     parent.scope.entries[value.value] = {}
                     parent.scope.entries[value.value]['used'] = False
+                    parent.scope.entries[value.value]['type'] = "variável"
                     parent.scope.entries[value.value]['varType'] = varType.value
                 else:
-                    print("Erro declaração de variáveis: '" + value.value + "' já foi declarado")
-            # print(t.parent)
-            # print(t.parent.scope.entries)
-            # for node in t.child:
-            #     print(node)
-            #     print(node.value)
-        if t.type == 'var':
-            print(t.type)
+                    print("Erro: variável '" + value.value + "' já foi declarada")
+           
+        if t.type == 'var' and t.parent.type != 'lista-variaveis' and t.parent.type != 'declaracao-variaveis':
             parent = t.parent
             found = False
             while parent.type != 'program':
@@ -90,9 +85,33 @@ def analysis(t):
                 else:
                     parent = parent.parent
             if not found:
-                print("Variável '" + t.value + "' usada não declarada")
-                
-                    
+                print("Erro: Variável '" + t.value + "' usada não declarada")
+
+        if t.type == 'declaracao-funcao' and len(t.child) > 1:
+            t.parent.scope.entries[t.child[1].value] = {}
+            t.parent.scope.entries[t.child[1].value]['used'] = False
+            t.parent.scope.entries[t.child[1].value]['type'] = "função"
+            t.parent.scope.entries[t.child[1].value]['varType'] = t.child[0].value
+            if len(t.child[1].child) > 1:
+                retorno_pos = len(t.child[1].child[1].child) - 1
+                if retorno_pos > 0 and t.child[1].child[1].child[retorno_pos].type != "retorna":
+                    print("Erro: função " + t.child[1].value + " deveria retornar um valor do tipo " + t.child[0].value)
+                elif retorno_pos == 0 and t.child[1].child[1].type != "retorna":
+                    print("Erro: função " + t.child[1].value + " deveria retornar um valor do tipo " + t.child[0].value)
+            else:
+                print("Erro: função " + t.child[1].value  + " deveria retornar um valor do tipo " + t.child[0].value)
+
+        if t.type == 'chamada-funcao':
+            parent = t.parent
+            found = False
+            while parent and parent.type != 'lista-declaracoes' and parent.type != 'program':
+                parent = parent.parent
+            
+            if t.value not in parent.scope.entries:
+                print("Error: '" + t.value + "' é uma função usada e não declarada")
+            else:
+                parent.scope.entries[t.value]['used'] = True
+
         for node in t.child:
             i = t.child.index(node)
             analysis(t.child[i])
@@ -261,10 +280,11 @@ def buildPrunnedTree(t):
 def verifyNotUsedVariables(tree):
     if tree is not None:
         if tree.scope.entries:
-            print(tree.scope)
+            # print(tree.scope)
+            pass
         for key in tree.scope.entries:
-            print(tree.scope.entries[key])
-
+            if not tree.scope.entries[key]['used'] and key != "principal":
+                print("Warning: "+ tree.scope.entries[key]['type'] +" '" + key + "' declarada e não usada")
         for node in tree.child:
             i = tree.child.index(node)
             verifyNotUsedVariables(tree.child[i])
