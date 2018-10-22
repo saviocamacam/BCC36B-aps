@@ -6,7 +6,7 @@
 # -------------------------------------------------------------------------
 
 from myparser import MyParser
-
+import re
 
 class Semantica:
 
@@ -48,6 +48,7 @@ def is_in(t):
 
 def analysis(t):
     if t is not None:
+        
         if t.type == 'program':
             for node in t.child:
                 i = t.child.index(node)
@@ -61,6 +62,7 @@ def analysis(t):
                     if node.value not in parent.scope.entries:
                         parent.scope.entries[node.value] = {}    
                         parent.scope.entries[node.value]['used'] = False
+                        parent.scope.entries[node.value]['initialized'] = False
                         parent.scope.entries[node.value]['type'] = "variável"
                         parent.scope.entries[node.value]['varType'] = varType.value
                     else:
@@ -69,6 +71,7 @@ def analysis(t):
                 if value.value not in parent.scope.entries:
                     parent.scope.entries[value.value] = {}
                     parent.scope.entries[value.value]['used'] = False
+                    parent.scope.entries[value.value]['initialized'] = False
                     parent.scope.entries[value.value]['type'] = "variável"
                     parent.scope.entries[value.value]['varType'] = varType.value
                 else:
@@ -80,6 +83,7 @@ def analysis(t):
             while parent.type != 'program':
                 if t.value in parent.scope.entries:
                     parent.scope.entries[t.value]['used'] = True
+                    t.varType = parent.scope.entries[t.value]['varType']
                     found = True
                     break
                 else:
@@ -87,24 +91,34 @@ def analysis(t):
             if not found:
                 print("Erro: Variável '" + t.value + "' usada não declarada")
 
-        if t.type == 'declaracao-funcao' and len(t.child) > 1:
-            t.parent.scope.entries[t.child[1].value] = {}
-            t.parent.scope.entries[t.child[1].value]['used'] = False
-            t.parent.scope.entries[t.child[1].value]['type'] = "função"
-            t.parent.scope.entries[t.child[1].value]['varType'] = t.child[0].value
-            if len(t.child[1].child) > 1:
-                retorno_pos = len(t.child[1].child[1].child) - 1
-                if retorno_pos > 0 and t.child[1].child[1].child[retorno_pos].type != "retorna":
-                    print("Erro: função " + t.child[1].value + " deveria retornar um valor do tipo " + t.child[0].value)
-                elif retorno_pos == 0 and t.child[1].child[1].type != "retorna":
-                    print("Erro: função " + t.child[1].value + " deveria retornar um valor do tipo " + t.child[0].value)
+        if t.type == 'declaracao-funcao':
+            indice = -1
+            if len(t.child) > 1:
+                indice = 1
             else:
-                print("Erro: função " + t.child[1].value  + " deveria retornar um valor do tipo " + t.child[0].value)
+                indice = 0
+            
+            parent = t.parent
+            while parent.type != "program":
+                parent = parent.parent
+
+            parent.scope.entries[t.child[indice].value] = {}
+            parent.scope.entries[t.child[indice].value]['used'] = False
+            parent.scope.entries[t.child[indice].value]['type'] = "função"
+            parent.scope.entries[t.child[indice].value]['varType'] = t.child[0].value
+            if len(t.child[indice].child) >= 1:
+                retorno_pos = len(t.child[indice].child[1].child) - 1
+                if retorno_pos > 0 and t.child[indice].child[1].child[retorno_pos].type != "retorna":
+                    print("Erro: função '" + t.child[indice].value + "' deveria retornar um valor do tipo " + t.child[0].value)
+                elif retorno_pos <= 0 and t.child[indice].child[1].type != "retorna":
+                    print("Erro: função '" + t.child[indice].value + "' deveria retornar um valor do tipo " + t.child[0].value)
+            else:
+                print("Erro: função '" + t.child[indice].value  + "' deveria retornar um valor do tipo " + t.child[0].value)
 
         if t.type == 'chamada-funcao':
             parent = t.parent
             found = False
-            while parent and parent.type != 'lista-declaracoes' and parent.type != 'program':
+            while parent and parent.type != 'program':
                 parent = parent.parent
             
             if t.value not in parent.scope.entries:
@@ -112,9 +126,43 @@ def analysis(t):
             else:
                 parent.scope.entries[t.value]['used'] = True
 
-        for node in t.child:
-            i = t.child.index(node)
-            analysis(t.child[i])
+        if t.type == 'parametro':
+            parent = t.parent
+            
+            while parent.type != "cabecalho":
+                parent = parent.parent
+            parent.scope.entries[t.child[1].value] = {}
+            parent.scope.entries[t.child[1].value]['used'] = False
+            parent.scope.entries[t.child[1].value]['type'] = "variável"
+            parent.scope.entries[t.child[1].value]['varType'] = t.child[0].value
+
+        if t.type == '+':
+            if t.child[0] != None:
+                analysis(t.child[0])
+            if t.child[2] != None:
+                analysis(t.child[2])
+            if t.child[0].varType != t.child[2].varType:
+                print("Aviso: coerção implícita de valores entre '" + t.child[0].value + "' e '" + t.child[2].value + "'")
+
+        if t.type == ':=':
+            if t.child[0] != None:
+                analysis(t.child[0])
+            if t.child[2] != None:
+                analysis(t.child[2])
+            if t.child[0].varType != t.child[2].varType:
+                print("Aviso: coerção implícita de valores entre '" + t.child[0].value + "' e '" + t.child[2].value + "'")
+
+        
+        if t.type == 'numero':
+            if re.match(r'[0-9]*\.[0-9]+([eE][-+]?[0-9]+)?', t.value):
+                t.varType = "flutuante"
+            elif re.match(r'[0-9][0-9]*', t.value):
+                t.varType = "inteiro"
+
+        if t.type != ":=" and t.type != "+":
+            for node in t.child:
+                i = t.child.index(node)
+                analysis(t.child[i])
 
 
 def printIdealTree(t):
@@ -279,12 +327,17 @@ def buildPrunnedTree(t):
 
 def verifyNotUsedVariables(tree):
     if tree is not None:
+        if tree.type == "program":
+            if "principal" not in tree.scope.entries:
+                print("Error: função 'principal' não declarada")
         if tree.scope.entries:
             # print(tree.scope)
             pass
         for key in tree.scope.entries:
             if not tree.scope.entries[key]['used'] and key != "principal":
                 print("Warning: "+ tree.scope.entries[key]['type'] +" '" + key + "' declarada e não usada")
+            if tree.scope.entries[key]['type'] == "variável" and not tree.scope.entries[key]['initialized']:
+                print("Warning: "+ tree.scope.entries[key]['type'] +" '" + key + "' não inicializada")
         for node in tree.child:
             i = tree.child.index(node)
             verifyNotUsedVariables(tree.child[i])

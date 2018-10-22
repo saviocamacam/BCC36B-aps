@@ -5,7 +5,12 @@
 inteiro: a
 flutuante: a, b, r
 
+inteiro func()
+    
+fim
+
 inteiro principal()
+    func()
     flutuante: z, x, s
     s:= 17 + 1.2 + 23
     se a > b então

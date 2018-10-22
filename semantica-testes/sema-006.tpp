@@ -8,11 +8,11 @@ inteiro func(inteiro: x, inteiro: y)
 fim
 
 inteiro principal()
-	flutuante: a
+	flutuante: a, d
 	flutuante: c
 	inteiro: b
 
-	b := c
+	d := c
 
 	a := func(10,5)
 fim

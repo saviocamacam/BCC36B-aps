@@ -36,6 +36,7 @@ class Tree:
     def __init__(self, type_node, child=[], value=''):
         self.parent = None
         self.type = type_node
+        self.varType = None
         self.child = child
         self.value = value
         self.scope = Scope(type_node)
