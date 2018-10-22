@@ -78,11 +78,19 @@ def analysis(t):
                     print("Erro: variável '" + value.value + "' já foi declarada")
            
         if t.type == 'var' and t.parent.type != 'lista-variaveis' and t.parent.type != 'declaracao-variaveis':
+            initialized = False
+            if t.parent.type == ":=":
+                i = t.parent.child.index(t)
+                
+                if i == 0:
+                    initialized = True
             parent = t.parent
             found = False
             while parent.type != 'program':
                 if t.value in parent.scope.entries:
                     parent.scope.entries[t.value]['used'] = True
+                    if not parent.scope.entries[t.value]['initialized']:
+                        parent.scope.entries[t.value]['initialized'] = initialized
                     t.varType = parent.scope.entries[t.value]['varType']
                     found = True
                     break
@@ -121,7 +129,9 @@ def analysis(t):
             while parent and parent.type != 'program':
                 parent = parent.parent
             
-            if t.value not in parent.scope.entries:
+            if t.value == "principal":
+                print("Error: chamada para a função principal não permitida")
+            elif t.value not in parent.scope.entries:
                 print("Error: '" + t.value + "' é uma função usada e não declarada")
             else:
                 parent.scope.entries[t.value]['used'] = True
@@ -133,6 +143,7 @@ def analysis(t):
                 parent = parent.parent
             parent.scope.entries[t.child[1].value] = {}
             parent.scope.entries[t.child[1].value]['used'] = False
+            parent.scope.entries[t.child[1].value]['initialized'] = False
             parent.scope.entries[t.child[1].value]['type'] = "variável"
             parent.scope.entries[t.child[1].value]['varType'] = t.child[0].value
 
@@ -142,7 +153,7 @@ def analysis(t):
             if t.child[2] != None:
                 analysis(t.child[2])
             if t.child[0].varType != t.child[2].varType:
-                print("Aviso: coerção implícita de valores entre '" + t.child[0].value + "' e '" + t.child[2].value + "'")
+                print("Warning: coerção implícita de valores entre '" + t.child[0].value + "' e '" + t.child[2].value + "'")
 
         if t.type == ':=':
             if t.child[0] != None:
@@ -150,7 +161,7 @@ def analysis(t):
             if t.child[2] != None:
                 analysis(t.child[2])
             if t.child[0].varType != t.child[2].varType:
-                print("Aviso: coerção implícita de valores entre '" + t.child[0].value + "' e '" + t.child[2].value + "'")
+                print("Warning: coerção implícita de valores entre '" + t.child[0].value + "' e '" + t.child[2].value + "'")
 
         
         if t.type == 'numero':
