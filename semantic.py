@@ -45,6 +45,11 @@ def is_in(t):
                       'inicializacao-variaveis',
                       'atribuicao'}
 
+def pre_analisys(t):
+    return t.type in {'retorna',
+    '+',
+    ':='}
+
 
 def analysis(t):
     if t is not None:
@@ -127,11 +132,11 @@ def analysis(t):
             parent = t.parent
             found = False
             while parent and parent.type != 'program':
+                if parent.type == "cabecalho" and parent.value == t.value and t.value == "principal":
+                    print("Warning: função '" + parent.value + "' em chamada recursiva. Operação inválida.")
                 parent = parent.parent
             
-            if t.value == "principal":
-                print("Error: chamada para a função principal não permitida")
-            elif t.value not in parent.scope.entries:
+            if t.value not in parent.scope.entries:
                 print("Error: '" + t.value + "' é uma função usada e não declarada")
             else:
                 parent.scope.entries[t.value]['used'] = True
@@ -170,7 +175,20 @@ def analysis(t):
             elif re.match(r'[0-9][0-9]*', t.value):
                 t.varType = "inteiro"
 
-        if t.type != ":=" and t.type != "+":
+        if t.type == "retorna":
+            analysis(t.child[0])
+            parent = t.parent
+            while parent.type != "declaracao-funcao":
+                parent = parent.parent
+            
+            if parent.child[0].type == "tipo":
+                if t.child[0].varType != parent.child[0].value:
+                    print("Error: função '" + parent.child[1].value + "' do tipo '" + parent.child[0].value + "' retornando valor do tipo '" + t.child[0].varType + "'")
+            else:
+                print("Error: função '" + parent.child[0].value + "' não tem tipo declarado e retorna valor do tipo '" + t.child[0].varType)
+
+
+        if not pre_analisys(t):
             for node in t.child:
                 i = t.child.index(node)
                 analysis(t.child[i])

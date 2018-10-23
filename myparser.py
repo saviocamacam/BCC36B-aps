@@ -371,7 +371,8 @@ class MyParser:
             p[0] = Tree('var', [], p[1])
         elif len(p) == 3:
             p[0] = Tree('var', [p[2]], p[1])
-            p[2].parent = p[0]
+            if p[2] != None:
+                p[2].parent = p[0]
 
     def p_expressao(self, p):
         '''
@@ -420,6 +421,7 @@ class MyParser:
             | error RBR
             | LBR error
         '''
+        print(p.slice[3])
         if(len(p) == 5):
             print("Erro sintático no índice na linha " + str(p.slice[3].lineno))
         elif p.slice[2].type == "error":
@@ -594,6 +596,7 @@ class MyParser:
         pass
 
     def p_error(self, p):
+        print(p)
         if p:
             print("'%s', linha %d" % (p.value, p.lineno))
         else:
