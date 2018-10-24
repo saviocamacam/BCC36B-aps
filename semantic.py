@@ -131,10 +131,11 @@ def analysis(t):
             parent.scope.entries[t.child[indice].value] = {}
             parent.scope.entries[t.child[indice].value]['used'] = False
             parent.scope.entries[t.child[indice].value]['type'] = "função"
+            parent.scope.entries[t.child[indice].value]['params'] = {'numero': 0}
             parent.scope.entries[t.child[indice].value]['varType'] = t.child[0].value
 
             if t.child[indice].child[0]:
-                parent.scope.entries[t.child[indice].value]['params'] = {}
+                
                 parent.scope.entries[t.child[indice].value]['params']['numero'] = len(t.child[indice].child[0].child)
 
                 for par in t.child[indice].child[0].child:
