@@ -12,7 +12,7 @@ inteiro principal()
 	flutuante: c
 	inteiro: b
 
-	d := c
+	b := c
 
 	a := func(10,5)
 fim

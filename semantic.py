@@ -48,7 +48,8 @@ def is_in(t):
 def pre_analisys(t):
     return t.type in {'retorna',
     '+',
-    ':='}
+    ':=',
+    'var'}
 
 
 def analysis(t):
@@ -82,27 +83,39 @@ def analysis(t):
                 else:
                     print("Erro: variável '" + value.value + "' já foi declarada")
            
-        if t.type == 'var' and t.parent.type != 'lista-variaveis' and t.parent.type != 'declaracao-variaveis':
-            initialized = False
-            if t.parent.type == ":=":
-                i = t.parent.child.index(t)
-                
-                if i == 0:
-                    initialized = True
-            parent = t.parent
-            found = False
-            while parent.type != 'program':
-                if t.value in parent.scope.entries:
-                    parent.scope.entries[t.value]['used'] = True
-                    if not parent.scope.entries[t.value]['initialized']:
-                        parent.scope.entries[t.value]['initialized'] = initialized
-                    t.varType = parent.scope.entries[t.value]['varType']
-                    found = True
-                    break
+        if t.type == 'var':
+            if len(t.child) == 1:
+                if t.child[0].type == "indice":
+                    for child in t.child[0].child:
+                        analysis(child)
+                        if child.varType != "inteiro" and child.value != "dim":
+                            print("Error: '" + child.value + "' deve ser ou retornar o tipo 'inteiro'")
                 else:
-                    parent = parent.parent
-            if not found:
-                print("Erro: Variável '" + t.value + "' usada não declarada")
+                    analysis(t.child[0])
+                    if t.child[0].varType != "inteiro" and t.child[0].value != "dim":
+                        print("Error: '" + t.child[0].value + "' deve ser ou retornar o tipo 'inteiro'")
+                        
+            if t.parent.type != 'lista-variaveis' and t.parent.type != 'declaracao-variaveis':
+                initialized = False
+                if t.parent.type == ":=":
+                    i = t.parent.child.index(t)
+                    
+                    if i == 0:
+                        initialized = True
+                parent = t.parent
+                found = False
+                while parent.type != 'program':
+                    if t.value in parent.scope.entries:
+                        parent.scope.entries[t.value]['used'] = True
+                        if not parent.scope.entries[t.value]['initialized']:
+                            parent.scope.entries[t.value]['initialized'] = initialized
+                        t.varType = parent.scope.entries[t.value]['varType']
+                        found = True
+                        break
+                    else:
+                        parent = parent.parent
+                if not found:
+                    print("Erro: Variável '" + t.value + "' usada não declarada")
 
         if t.type == 'declaracao-funcao':
             indice = -1
@@ -119,18 +132,37 @@ def analysis(t):
             parent.scope.entries[t.child[indice].value]['used'] = False
             parent.scope.entries[t.child[indice].value]['type'] = "função"
             parent.scope.entries[t.child[indice].value]['varType'] = t.child[0].value
+
+            if t.child[indice].child[0]:
+                parent.scope.entries[t.child[indice].value]['params'] = {}
+                parent.scope.entries[t.child[indice].value]['params']['numero'] = len(t.child[indice].child[0].child)
+
+                for par in t.child[indice].child[0].child:
+                    i = t.child[indice].child[0].child.index(par)
+                    parent.scope.entries[t.child[indice].value]['params'][i] = {}
+                    parent.scope.entries[t.child[indice].value]['params'][i]['type'] = par.child[0].value
+                    parent.scope.entries[t.child[indice].value]['params'][i]['name'] = par.child[1].value
+                    if par.child[1].child:
+                        parent.scope.entries[t.child[indice].value]['params'][i]['dimensions'] = len(par.child[1].child)
+                    
             if len(t.child[indice].child) >= 1:
                 retorno_pos = len(t.child[indice].child[1].child) - 1
                 if retorno_pos > 0 and t.child[indice].child[1].child[retorno_pos].type != "retorna":
-                    print("Erro: função '" + t.child[indice].value + "' deveria retornar um valor do tipo " + t.child[0].value)
+                    print("Erro: função '" + t.child[indice].value + "' deveria retornar um valor do tipo '" + t.child[0].value + "' ")
                 elif retorno_pos <= 0 and t.child[indice].child[1].type != "retorna":
-                    print("Erro: função '" + t.child[indice].value + "' deveria retornar um valor do tipo " + t.child[0].value)
+                    print("Erro: função '" + t.child[indice].value + "' deveria retornar um valor do tipo '" + t.child[0].value + "' ")
             else:
-                print("Erro: função '" + t.child[indice].value  + "' deveria retornar um valor do tipo " + t.child[0].value)
+                print("Erro: função '" + t.child[indice].value  + "' deveria retornar um valor do tipo '" + t.child[0].value + "' ")
 
         if t.type == 'chamada-funcao':
             parent = t.parent
             found = False
+            arg_number = 0
+            if t.child:
+                arg_number = 1
+                if t.child[0].type == "lista-argumentos":
+                    arg_number = len(t.child[0].child)
+
             while parent and parent.type != 'program':
                 if parent.type == "cabecalho" and parent.value == t.value and t.value == "principal":
                     print("Warning: função '" + parent.value + "' em chamada recursiva. Operação inválida.")
@@ -139,7 +171,20 @@ def analysis(t):
             if t.value not in parent.scope.entries:
                 print("Error: '" + t.value + "' é uma função usada e não declarada")
             else:
+                if not parent.scope.entries[t.value]['params'] and arg_number > 0:
+                    print("Error: número incorreto de parâmetros. Função '" + t.value + "' aguarda '0' argumentos, mas '" + str(arg_number) + "' são passados")
+                elif parent.scope.entries[t.value]['params']['numero'] != arg_number:
+                    print("Error: número incorreto de parâmetros. Função '" + t.value + "' aguarda '" + str(parent.scope.entries[t.value]['params']['numero']) + "' argumentos, mas '" + str(arg_number) + "' são passados")
+                elif parent.scope.entries[t.value]['params']['numero'] == arg_number:
+                    if arg_number > 1:
+                        for i in range(parent.scope.entries[t.value]['params']['numero']):
+                            t.child[0].child[i]
+                            analysis(t.child[0].child[i])
+                            if parent.scope.entries[t.value]['params'][i]['type'] != t.child[0].child[i].varType:
+                                print("Warning: coerção implícita de valores entre parâmetros da função '" + t.value + "' no parâmetro '" + parent.scope.entries[t.value]['params'][i]['name'] + "'")
+
                 parent.scope.entries[t.value]['used'] = True
+                t.varType = parent.scope.entries[t.value]['varType']
 
         if t.type == 'parametro':
             parent = t.parent
@@ -155,8 +200,11 @@ def analysis(t):
         if t.type == '+':
             if t.child[0] != None:
                 analysis(t.child[0])
+                t.varType = t.child[0].varType
+                
             if t.child[2] != None:
                 analysis(t.child[2])
+
             if t.child[0].varType != t.child[2].varType:
                 print("Warning: coerção implícita de valores entre '" + t.child[0].value + "' e '" + t.child[2].value + "'")
 
@@ -183,7 +231,7 @@ def analysis(t):
             
             if parent.child[0].type == "tipo":
                 if t.child[0].varType != parent.child[0].value:
-                    print("Error: função '" + parent.child[1].value + "' do tipo '" + parent.child[0].value + "' retornando valor do tipo '" + t.child[0].varType + "'")
+                    print("Error: função '" + parent.child[1].value + "' do tipo '" + parent.child[0].value + "' retornando valor do tipo '" + str(t.child[0].varType) + "'")
             else:
                 print("Error: função '" + parent.child[0].value + "' não tem tipo declarado e retorna valor do tipo '" + t.child[0].varType)
 
