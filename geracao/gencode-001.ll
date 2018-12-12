@@ -11,7 +11,7 @@ declare i32 @"leiaInteiro"()
 declare float @"leiaFlutuante"() 
 
 @"a" = global i32 0, align 4
-define i32 @"principal"() 
+define i32 @"main"() 
 {
 entry-principal:
   %"retorno" = alloca i32
@@ -20,8 +20,10 @@ entry-principal:
   store i32 10, i32* @"a"
   %"right_side" = load i32, i32* @"a"
   store i32 %"right_side", i32* %"b"
+  %"temp-" = load i32, i32* %"b"
+  store i32 %"temp-", i32* %"retorno"
   br label %"exit-principal"
 exit-principal:
-  %".6" = load i32, i32* %"retorno"
-  ret i32 %".6"
+  %"retFin" = load i32, i32* %"retorno"
+  ret i32 %"retFin"
 }

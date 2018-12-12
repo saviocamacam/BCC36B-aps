@@ -3,7 +3,7 @@ inteiro: a
 
 inteiro principal()
 	inteiro: ret
-	a := 10    
+	a := 25    
 	se a > 5 então
 		se a < 20 então
 			ret := 1
@@ -14,5 +14,5 @@ inteiro principal()
 		ret := 0
   fim
 
-  retorna(0)
+  retorna(ret)
 fim

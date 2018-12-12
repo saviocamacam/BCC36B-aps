@@ -12,7 +12,7 @@ declare float @"leiaFlutuante"()
 
 @"n" = global i32 0, align 4
 @"soma" = global i32 0, align 4
-define i32 @"principal"() 
+define i32 @"main"() 
 {
 entry-principal:
   %"retorno" = alloca i32
@@ -21,8 +21,8 @@ entry-principal:
   store i32 0, i32* @"soma"
   br label %"repita-loop"
 exit-principal:
-  %".12" = load i32, i32* %"retorno"
-  ret i32 %".12"
+  %"retFin" = load i32, i32* %"retorno"
+  ret i32 %"retFin"
 repita-loop:
   %"left_side" = load i32, i32* @"soma"
   %"right_side" = load i32, i32* @"n"
@@ -37,6 +37,8 @@ test-loop:
   %"exp-test" = icmp eq i32 %"n", 0
   br i1 %"exp-test", label %"repita-loop", label %"end"
 end:
-  store i32 0, i32* @"soma"
+  %"writesoma" = load i32, i32* @"soma"
+  call void @"escrevaInteiro"(i32 %"writesoma")
+  store i32 0, i32* %"retorno"
   br label %"exit-principal"
 }

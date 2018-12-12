@@ -47,7 +47,7 @@ end:
   br label %"if_end"
 }
 
-define i32 @"principal"() 
+define i32 @"main"() 
 {
 entry-principal:
   %"retorno" = alloca i32

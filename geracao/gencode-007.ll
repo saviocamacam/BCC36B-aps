@@ -40,7 +40,7 @@ exit-sub:
   ret i32 %"retFin"
 }
 
-define i32 @"principal"() 
+define i32 @"main"() 
 {
 entry-principal:
   %"retorno" = alloca i32

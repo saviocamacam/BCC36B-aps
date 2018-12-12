@@ -52,8 +52,14 @@ class Generator:
                     _type = types[varType.value]
                     var_type = _type() if _type == ir.FloatType else _type(32)
 
+                    
+
                     if value.type == 'lista-variaveis':
                         for node in value.child:
+                            
+                            if node.child[0].type == "indice":
+                                var_type = ir.ArrayType(ir.IntType(64), node.child[0].value)
+
                             llvm_var = ir.GlobalVariable(
                                 self.module, var_type, node.value)
                             llvm_var.initializer = ir.Constant(
@@ -61,11 +67,18 @@ class Generator:
                             llvm_var.align = align
                             t.parent.scope.entries[node.value]['llvm'] = llvm_var
                     else:
+                        if value.child and value.child[0].type == "numero":
+                            var_type = ir.ArrayType(ir.IntType(64), int(value.child[0].value))
+
                         llvm_var = ir.GlobalVariable(
                             self.module, var_type, value.value)
-                        llvm_var.initializer = ir.Constant(
-                            var_type, 0.0 if _type == ir.FloatType else 0)
-                        llvm_var.align = align
+                        if value.child and value.child[0].type == "numero":
+                            llvm_var.initializer = ir.Constant(ir.IntType(64), 0)
+                            llvm_var.align = 16
+                        else:
+                            llvm_var.initializer = ir.Constant(
+                                var_type, 0.0 if _type == ir.FloatType else 0)
+                            llvm_var.align = align
                         t.parent.scope.entries[value.value]['llvm'] = llvm_var
 
                 if t.parent.type == 'corpo':
@@ -84,6 +97,8 @@ class Generator:
                             llvm_var.align = align
                             t.parent.scope.entries[node.value]['llvm'] = llvm_var
                     else:
+                        if value.child and value.child[0].type == "numero":
+                            var_type = ir.ArrayType(ir.IntType(64), int(value.child[0].value))
                         llvm_var = self.builder.alloca(
                             var_type, name=value.value)
                         llvm_var.initializer = ir.Constant(
@@ -101,8 +116,11 @@ class Generator:
                     zero = ir.Constant(
                         var_type, 0.0 if _type == ir.FloatType else 0)
                     t_func = ir.FunctionType(var_type, ())
+                    name = t.child[1].value
+                    if t.child[1].value == "principal":
+                        name = "main"
                     func = ir.Function(self.module, t_func,
-                                       name=t.child[1].value)
+                                       name=name)
 
                     parent = t.parent
                     while parent.type != "program":
@@ -237,7 +255,7 @@ class Generator:
             if t.type == "escreva":
                 self.gen(t.child[0])
                 value = t.child[0]
-                print(value.type)
+                # print(value.type)
                 temp = None
                 if value.type == "var":
                     temp = self.builder.load(value.llvm,name="write" + value.value)
@@ -310,6 +328,13 @@ class Generator:
                 while parent.type != 'program':
                     if t.value in parent.scope.entries:
                         t.llvm = parent.scope.entries[t.value]['llvm']
+                        
+                        if t.child and  t.child[0].type == "numero":
+                            if self.builder:
+                                int_ty = ir.IntType(64)
+                                t.llvm = self.builder.gep(t.llvm, [int_ty(0), int_ty(int(t.child[0].value))], name='ptr_' + t.value + "_" + t.child[0].value)
+                                t.llvm = self.builder.load(t.llvm, "teste")
+                            
                         break
                     else:
                         parent = parent.parent
@@ -349,10 +374,9 @@ class Generator:
             if t.type == ":=":
                 self.gen(t.child[0])
                 self.gen(t.child[2])
-                # print(t.child[0].llvm.type.pointee(t.child[0].varType))
-                # print(t.child[2].llvm)
-                # left_side = self.builder.load(t.child[0].llvm)
-                # print(t.child[0].llvm)
+                print(t.child[0])
+                print(t.child[2].value)
+                
                 right_side = t.child[2]
                 if right_side.llvm:
                     if right_side.type == 'var':
