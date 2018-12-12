@@ -1,9 +1,9 @@
-#-*- coding: utf-8 -*-
-#-------------------------------------------------------------------------
+# -*- coding: utf-8 -*-
+# -------------------------------------------------------------------------
 # lexer.py
 # Analisador léxico para a linguagem Tinnny++
 # Autores: Sávio Camacam
-#-------------------------------------------------------------------------
+# -------------------------------------------------------------------------
 
 import ply.lex as lex
 from ply.ctokens import t_ID
@@ -11,7 +11,7 @@ from ply.ctokens import t_ID
 
 class Lexer:
     def __init__(self):
-        self.lexer = lex.lex(debug=False,module=self, optimize=False)
+        self.lexer = lex.lex(debug=False, module=self, optimize=False)
 
     keywords = {
         u'se': 'SE',
@@ -24,7 +24,7 @@ class Lexer:
         u'retorna': 'RETORNA',
         u'até': 'ATE',
         u'leia': 'LEIA',
-        u'escreve': 'ESCREVE',
+        u'escreva': 'ESCREVA',
     }
 
     tokens = ['ASS', 'COLON', 'LPAR', 'RPAR', 'ADD', 'SUB', 'TIMES', 'DIV',
@@ -52,11 +52,9 @@ class Lexer:
     t_AND = r'&&'
     t_OR = r'\|\|'
 
-
-
     def t_FLUTUANTE(self, t):
         r'[0-9]*\.[0-9]+([eE][-+]?[0-9]+)?'
-        t.type = self.keywords.get(t.value,'FLUTUANTE')
+        t.type = self.keywords.get(t.value, 'FLUTUANTE')
         return t
 
     def t_INTEIRO(self, t):
@@ -66,7 +64,7 @@ class Lexer:
 
     def t_ID(self, t):
         r'[a-zA-Zá-ñÁ-Ñ][a-zA-Zá-ñÁ-Ñ0-9_]*'
-        t.type = self.keywords.get(t.value,'ID')
+        t.type = self.keywords.get(t.value, 'ID')
         return t
 
     def t_COMMENT(self, t):
@@ -89,7 +87,8 @@ class Lexer:
 
     def t_ERRORCT(self, t):
         r'[{}]'
-        print("Erro de comentário na linha %d, coluna %d" % (t.lineno, t.lexpos))
+        print("Erro de comentário na linha %d, coluna %d" %
+              (t.lineno, t.lexpos))
         t.lexer.skip(1)
 
     def test(self, code):
@@ -98,11 +97,12 @@ class Lexer:
             t = lex.token()
             if not t:
                 break
-            print('<' + t.type +',' + t.value + '>')
+            print('<' + t.type + ',' + t.value + '>')
+
 
 if __name__ == '__main__':
     from sys import argv
-    lexer  = Lexer()
+    lexer = Lexer()
     for filename in argv[1:]:
         f = open(filename, encoding='utf-8')
         print(f.name)

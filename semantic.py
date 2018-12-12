@@ -12,17 +12,11 @@ class Semantica:
 
     def __init__(self, code):
         self.tree = MyParser(code).ast
-
-
-class Tree:
-
-    def __init__(self, type_node, child=[], value=''):
-        self.type = type_node
-        self.child = child
-        self.value = value
-
-    def __str__(self):
-        return self.type
+        buildPrunnedTree(self.tree)
+        analysis(self.tree)
+        verifyNotUsedVariables(self.tree)
+        print("")
+        printPrunnedTree(self.tree)
 
 
 def is_in(t):
@@ -56,6 +50,16 @@ def analysis(t):
     if t is not None:
         
         if t.type == 'program':
+            t.scope.entries["escreva"] = {}
+            t.scope.entries["escreva"]['used'] = True
+            t.scope.entries["escreva"]['type'] = "função"
+            t.scope.entries["escreva"]['params'] = {'numero': 1}
+            t.scope.entries["escreva"]['varType'] = None
+            # t.scope.entries["leia"] = {}
+            # t.scope.entries["leia"]['used'] = True
+            # t.scope.entries["leia"]['type'] = "função"
+            # t.scope.entries["leia"]['params'] = {'numero': 1}
+            # t.scope.entries["leia"]['varType'] = None
             for node in t.child:
                 i = t.child.index(node)
         
@@ -156,6 +160,7 @@ def analysis(t):
                 print("Erro: função '" + t.child[indice].value  + "' deveria retornar um valor do tipo '" + t.child[0].value + "' ")
 
         if t.type == 'chamada-funcao':
+            print(t.value)
             parent = t.parent
             found = False
             arg_number = 0
@@ -198,7 +203,7 @@ def analysis(t):
             parent.scope.entries[t.child[1].value]['type'] = "variável"
             parent.scope.entries[t.child[1].value]['varType'] = t.child[0].value
 
-        if t.type == '+':
+        if t.type == '+' or t.type == '-' or t.type == '/' or t.type == '*':
             if t.child[0] != None:
                 analysis(t.child[0])
                 t.varType = t.child[0].varType
@@ -388,6 +393,8 @@ def buildPrunnedTree(t):
                 t.type = ':='
             elif t.type == 'expressao-aditiva':
                 t.type = t.child[1].value
+            elif t.type == 'expressao-multiplicativa':
+                t.type = t.child[1].value
             elif t.type == 'operador_relacional':
                 t.type = t.child[1].value
 
@@ -446,13 +453,13 @@ if __name__ == "__main__":
         sys.stdout = result
 
         f = open(argv[1], encoding='utf-8')
-        s = Semantica(f.read())
+        Semantica(f.read())
         # printIdealTree(s.tree)
         # print('\n>>\n')
-        buildPrunnedTree(s.tree)
-        analysis(s.tree)
-        verifyNotUsedVariables(s.tree)
-        printPrunnedTree(s.tree)
+        # buildPrunnedTree(s.tree)
+        # analysis(s.tree)
+        # verifyNotUsedVariables(s.tree)
+        # printPrunnedTree(s.tree)
 
         sys.stdout = old_stdout
         result_string = result.getvalue()

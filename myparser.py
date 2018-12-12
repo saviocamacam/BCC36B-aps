@@ -291,7 +291,7 @@ class MyParser:
             | se
             | repita
             | leia
-            | escreve
+            | escreva
             | retorna
         '''
         p[0] = Tree('acao', [p[1]])
@@ -343,9 +343,9 @@ class MyParser:
         p[0] = Tree('leia', [p[3]], p[1])
         p[3].parent = p[0]
 
-    def p_escreve(self, p):
-        'escreve : ESCREVE LPAR expressao RPAR'
-        p[0] = Tree('escreve', [p[3]], p[1])
+    def p_escreva(self, p):
+        'escreva : ESCREVA LPAR expressao RPAR'
+        p[0] = Tree('escreva', [p[3]], p[1])
         p[3].parent = p[0]
 
     def p_retorna(self, p):
